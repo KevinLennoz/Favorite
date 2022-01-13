@@ -1,3 +1,4 @@
+
 ##############################
 ## Java
 ##############################
@@ -50,3 +51,4 @@ tmp/
 local.properties
 .loadpath
 .factorypath
+.tern-project
