@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+	<title>Payment</title>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'rel='stylesheet'>
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
+	<script type='text/javascript' 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+	<script type='text/javascript' 	src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+	<script type="text/javascript" src="/js/payment.js"></script>
+	<link rel="stylesheet" href="/css/payment.css">
+	</head>
+	<body oncontextmenu='return false' class='snippet-body'>
+	 <div layout:fragment="content">
+			<!-- MultiStep Form -->
+			<div class="container-fluid" id="grad1">
+				<div class="row justify-content-center mt-0">
+					<div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+						<div id="parent" class="card px-0 pt-4 pb-0 mt-3 mb-3">
+							<h2>
+								<strong>Bienvenue sur l'interface de paiement</strong>
+							</h2>
+							<p>Tous les champs sont obligatoires</p>
+							<div class="row">
+								<div class="col-md-12 mx-0">
+									<form id="msform" th:action="@{/newCommand}" th:object=${command} method="post">
+										<!-- progressbar -->
+										<ul id="progressbar">
+											<!--  <li class="active" id="account"><strong>Compte</strong></li>-->
+											<li class="active" id="personal"><strong>Addresses</strong></li>
+											<li id="payment"><strong>Paiement</strong></li>
+											<li id="confirm"><strong>Finalisation</strong></li>
+										</ul> <!-- fieldsets -->
+										<fieldset>
+											<div class="form-card">
+												<h2 class="fs-title">Adresse de Facturation</h2>
+												<label> Nom </label>
+												<input class="form-control" type="text" th:field="*{facturationAddress.name}"/>
+												<label> N° et rue </label>
+												<input class="form-control" type="text" th:field="*{facturationAddress.street}"/>
+												<label> Code Postal </label>
+												<input class="form-control" type="text" th:field="*{facturationAddress.city.zipCode}"/>
+												<label> Ville </label>
+												<input class="form-control" type="text" th:field="*{facturationAddress.city.name}"/>
+											</div>
+											<div class="form-card">
+												<h2 class="fs-title">Adresse de Livraison</h2>
+												<label> Nom </label>
+												<input class="form-control" type="text" th:field="*{deliveryAddress.name}"/>
+												<label> N° et rue </label>
+												<input class="form-control" type="text" th:field="*{deliveryAddress.street}"/>
+												<label> Code Postal </label>
+												<input class="form-control" type="text" th:field="*{deliveryAddress.city.zipCode}"/>
+												<label> Ville </label>
+												<input class="form-control" type="text" th:field="*{deliveryAddress.city.name}"/>
+											</div>
+											<input type="button" name="previous" class="previous action-button-previous" value="précédent" />
+											<input type="button" name="next" class="next action-button" value="suivant" />
+										</fieldset>
+										<fieldset>
+											<div class="form-card">
+												<h2 class="fs-title">Information de Paiement</h2>
+												<label class="pay">Nom</label>
+												<input type="text" name="holdername" placeholder="" />
+												<div class="row">
+													<div class="col-9">
+														<label class="pay">Numéro de Carte</label> <input type="text" name="cardno" placeholder="" />
+													</div>
+													<div class="col-3">
+														<label class="pay">CVC</label> <input type="password" name="cvcpwd" placeholder="***" />
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-3">
+														<label class="pay">Date d'expiration</label>
+													</div>
+													<div class="col-9">
+														<select class="list-dt" id="month" name="expmonth">
+															<option selected>Mois</option>
+															<option>Janvier</option>
+															<option>Février</option>
+															<option>Mars</option>
+															<option>Avril</option>
+															<option>Mai</option>
+															<option>Juin</option>
+															<option>Juillet</option>
+															<option>Août</option>
+															<option>Septembre</option>
+															<option>Octobre</option>
+															<option>Novembre</option>
+															<option>Decembre</option>
+														</select>
+														<select class="list-dt" id="year" name="expyear">
+															<option selected>Année</option>
+															<option>2021</option>
+															<option>2022</option>
+															<option>2023</option>
+															<option>2024</option>
+															<option>2025</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<input type="button" name="previous" class="previous action-button-previous" value="précédent" />
+											<input type="submit" name="make_payment" class="next action-button" value="Valider et payer" />
+										</fieldset>
+										<fieldset>
+											<div class="form-card">
+												<h2 class="fs-title text-center">Commande validée !</h2>
+												<br> <br>
+												<div class="row justify-content-center">
+													<div class="col-3">
+														<!--  <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image"> -->
+													</div>
+												</div>
+												<br> <br>
+												<div class="row justify-content-center">
+													<div class="col-7 text-center">
+														<!-- <h5>Votre commande a été correctement validée</h5> -->
+													</div>
+												</div>
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

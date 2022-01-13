@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layout}">
+	<head>
+	    	<link rel="stylesheet" href="/css/home.css">
+	</head>
+	<body style="overflow: hidden">
+		<div id="center" layout:fragment="content">
+		    <video width="200px" style="order:20;" loop autoplay muted id="bgvid">
+		    	<source src="/video/Accueil.webm" type="video/webm">
+    			<source src="/video/Accueil.mp4" type="video/mp4">
+			</video>
+			<div class="overlay">
+				<div class="content">
+					FAVORI(TE)<a href="/products/all">Accéder à la boutique</a>
+				</div>
+			</div>
+		    
+		</div>
+	</body>
+</html>

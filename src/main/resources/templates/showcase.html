@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layout}">
+	<head>
+	    <title>Fiche produit</title>
+	    <link rel="stylesheet" href="/css/productTypeNavBar.css">
+	    <link rel="stylesheet" href="/css/showcase.css">
+	</head>
+	<body>
+		<div layout:fragment="productTypeNavBar">
+			<div id="nav-produit">
+				<nav id="list-product-type" class="navbar navbar-expand-md navbar-light bg-light text-center">
+					<ul id="wrappedProductType" class="navbar-nav collapse">
+						<li class="nav-item active">
+							<a class="nav-link" href="/products/all">Tous les produits</a>
+						</li>
+						<li class="nav-item active" th:each="category : ${categories}">
+							<a th:class="${productType.name} == ${category.name} ? 'nav-link-active':'nav-link'" th:href="@{'/products/' + ${category.name}}" th:text="${category.name}"></a>
+						</li>
+					</ul>
+					<button id="research-button" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wrappedProductType" aria-controls="wrappedProductType" aria-expanded="false" aria-label="Toggle navigation">
+						<svg id="research-icon" xmlns="http://www.w3.org/2000/svg" class="bi bi-search">
+							<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+						</svg>
+				 	</button>
+				</nav>
+			</div>
+		</div>
+		
+		<div layout:fragment="content">
+			<div class="container">
+			    <div class="row">
+			    	<h3 class="no-article" th:if="${products.size == 0}"> Pas d'article pour le moment</h3>
+
+		            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-8" th:each="product : ${products}" th:unless="${product.refDeletionDate}">
+		            	<div class="product-grid mx-1 my-2">
+			                <div class="product-image">
+				                <a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}"> 
+				                	<img class="pic-1" th:src="@{'/photos/product/' + ${product.photos[0].path}}">
+				                	<img class="pic-2" th:src="@{'/photos/product/' + ${product.photos[1].path}}">
+				                </a>
+				                <span class="soldout" th:if="${product.quantity == 0}">Rupture de Stock</span>
+			                </div>
+			                <div class="product-content">
+			                    <h3 class="title">
+			                    	<a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}" th:text="${product.name}"></a>
+			                    </h3>
+			                    
+			                    <div class="product-stock-price">
+			                    	<span class="price">[[${#numbers.formatCurrency(product.price)}]]</span>
+			                    </div>
+			                </div>
+			             </div>
+		            </div>
+			    </div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				layout:decorate="~{layout}" 
+				xmlns="http://www.w3.org/2000/svg">
+	<head>
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+		    <title>Fiche produit</title>
+		    <link rel="stylesheet" href="/css/productSheet.css">
+		    <link rel="stylesheet" href="/css/productTypeNavBar.css">
+		    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+   			<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+		    
+	</head>
+<body>
+
+<div layout:fragment="productTypeNavBar">
+	<div id="nav-produit">
+		<nav id="list-product-type" class="navbar navbar-expand-md navbar-light bg-light text-center">
+			<ul id="wrappedProductType" class="navbar-nav collapse">
+				<li class="nav-item active">
+					<a class="nav-link" href="/products/all">Tous les produits</a>
+				</li>
+				<li class="nav-item active" th:each="category : ${categories}">
+					<a class="nav-link" th:href="@{'/products/' + ${category.name}}" th:text="${category.name}"></a>
+				</li>
+			</ul>
+			<button id="research-button" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wrappedProductType" aria-controls="wrappedProductType" aria-expanded="false" aria-label="Toggle navigation">
+				<svg id="research-icon" xmlns="http://www.w3.org/2000/svg" class="bi bi-search">
+					<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+				</svg>
+			</button>
+		</nav>
+	</div>
+</div>
+		
+<div layout:fragment="content">	
+			
+<div class="card">
+			<div id="container" class="container-fliud">
+				<div class="wrapper col-xs-12">
+					<div class="preview col-6">
+						<div class="preview-thumbnail-div col-2">
+						<ul class="preview-thumbnail nav nav-tabs">
+						  <li th:each="photo, iterstat : ${product.photos}" th:class="${iterstat.index}== 0  ?
+						   'active'"><a th:attr="data-target='#pic-'+(${iterstat.index}+1)" data-toggle="tab"><img th:src="@{'/photos/product/' + ${photo.path}}" th:alt="${photo.description}" /></a></li>
+						</ul>
+						</div>
+						<div class="preview-pic tab-content col-6">
+						  <div th:each="photo, iterstat : ${product.photos}" th:class="${iterstat.index}== 0  ? 'tab-pane active':'tab-pane'" th:id="'pic-'+(${iterstat.index}+1)"><img th:src="@{'/photos/product/' + ${photo.path}}" th:alt="${photo.description}" /></div>
+						</div>
+						
+						
+					</div>
+					<div class="text d-flex flex-column col-6">
+					<div class="product-info ">
+						<div class="title d-flex">
+						<div id="product-name" th:text="${product.name}" style="margin-right:40px"></div>
+						<div id="product-price"><span>[[${#numbers.formatCurrency(product.price)}]]</span></div>
+						</div>
+						<div id="product-description" th:text="${product.description}"></div>
+					</div>
+						<form th:action="@{/addToCart}" th:object="${article}" method="post" th:if="${product.quantity > 0}">
+							<div id="formulaire" class="form-group">
+							<div id="product-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
+								<select th:field="*{size.label}" class="form-control form-control-sm">
+									<option th:each="stock : ${product.stocks}" th:disabled="${stock.quantity == 0}" th:value="${stock.size.label}" th:text="${stock.size.label}"></option>
+								</select>
+							</div>
+							
+							<div id="product-quantity" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Quantité :</span>
+								<input type="number" min=1 th:field="*{quantity}" class="form-control form-control-sm">
+							</div>
+							</div>
+							<input type="hidden" th:value="${product.id}" name="idProduct" />
+							
+							<div class="buttons d-flex">
+								<input type="submit" value="Personnaliser !" class="btn btn-primary" style="margin-right:20px" th:formaction="@{'/generateCustom'}"/>
+								<input type="submit" value="Ajouter au panier" class="btn btn-primary"/>
+							</div>
+						</form>
+						<span class="soldout" th:if="${product.quantity == 0}">Rupture de Stock</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</body>
+</html>
