@@ -24,22 +24,22 @@ public class WebClientConfig {
 
 	@Bean(name = "orderWebclient")
 	WebClient webClientOrder() {
-		return webclientBuilder
-				.baseUrl(orderWSEndPoint)
-				.build();
+		return buildWebclient(orderWSEndPoint);
 	}
 
 	@Bean(name = "productWebclient")
 	WebClient webClientProduct() {
-		return webclientBuilder
-				.baseUrl(productWSEndPoint)
-				.build();
+		return buildWebclient(productWSEndPoint);
 	}
 
 	@Bean(name = "userWebclient")
 	WebClient webClientUser() {
+		return buildWebclient(userWSEndPoint);
+	}
+	
+	private WebClient buildWebclient(String endPoint) {
 		return webclientBuilder
-				.baseUrl(userWSEndPoint)
+				.baseUrl(endPoint)
 				.build();
 	}
 }
