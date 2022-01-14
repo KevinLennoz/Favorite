@@ -1,69 +1,58 @@
 package fr.eql.al35.service;
 
 import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.eql.al35.delegate.UserDelegate;
 import fr.eql.al35.entity.Address;
 import fr.eql.al35.entity.Gender;
 import fr.eql.al35.entity.User;
 import fr.eql.al35.entity.UserType;
 import fr.eql.al35.iservice.AccountIService;
-import fr.eql.al35.repository.AddressIRepository;
-import fr.eql.al35.repository.GenderIRepository;
-import fr.eql.al35.repository.UserIRepository;
 import fr.eql.al35.repository.UserTypeIRepo;
 
 
 @Service
-@Transactional
 public class AccountService implements AccountIService {
 
-	@Autowired
-	private UserIRepository userRepository;
-	
-	@Autowired
-	private AddressIRepository addressRepository;
-	
-	@Autowired
-	private GenderIRepository genderRepository;
+	private final UserDelegate userDelegate;
 	
 	@Autowired
 	UserTypeIRepo userTypeRepository;
-	
+
+	public AccountService(UserDelegate userDelegate) {
+		this.userDelegate = userDelegate;
+	}
+
 	@Override
 	public List<User> displayAllUsers() {
-		return (List<User>) userRepository.findAll();
+		return userDelegate.getAllUsers();
 	}
 
 	@Override
 	public User getUser3() {
-		Optional<User> user = userRepository.findById(3);
-		return user.isPresent() ? user.get() : null;
+		return userDelegate.getUserById(3);
 	}
 
 	@Override
 	public List<Address> getAddressByUser(User user) {
-		return addressRepository.findByUser(user);
+		return userDelegate.getAddressesByUserId(user.getId());
 	}
 
 	@Override
 	public User getAdminAccount() {
-		Optional<User> user = userRepository.findById(2);
-		return user.isPresent() ? user.get() : null;
+		return userDelegate.getUserById(2);
 	}
 	
 	@Override
 	public List<Gender> getAllGenders(){
-		return (List<Gender>) genderRepository.findAll();
+		return userDelegate.getAllGenders();
 	}
 
 	@Override
 	public List<UserType> getAllUserTypes() {
-		return (List<UserType>) userTypeRepository.findAll();
+		return userDelegate.getAllUserTypes();
 	}
 }
