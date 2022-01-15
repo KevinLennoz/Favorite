@@ -14,6 +14,6 @@ import lombok.ToString;
 @Getter @Setter @ToString @EqualsAndHashCode @NoArgsConstructor @AllArgsConstructor
 public class Cart {
 	
-	private Set<OrderLineDTO> orderLine = new HashSet<>();
+	private Set<OrderLineDTO> orderLines = new HashSet<>();
 	
 }

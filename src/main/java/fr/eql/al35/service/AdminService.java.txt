@@ -15,34 +15,10 @@ import fr.eql.al35.entity.User;
 import fr.eql.al35.entity.UserType;
 import fr.eql.al35.entity.Vat;
 import fr.eql.al35.iservice.AdminIService;
-import fr.eql.al35.repository.GenderIRepository;
-import fr.eql.al35.repository.PayModeIRepository;
-import fr.eql.al35.repository.StatusIRepository;
-import fr.eql.al35.repository.UserIRepository;
-import fr.eql.al35.repository.UserTypeIRepo;
-import fr.eql.al35.repository.VatIRepository;
 
 @Service
 @Transactional
 public class AdminService implements AdminIService {
-	
-	@Autowired
-	StatusIRepository statusRepo;
-	
-	@Autowired
-	UserIRepository userRepo;
-	
-	@Autowired
-	GenderIRepository genderRepo;
-	
-	@Autowired
-	UserTypeIRepo userTypeRepo;
-	
-	@Autowired
-	VatIRepository vatRepo;
-	
-	@Autowired
-	PayModeIRepository payModeRepo;
 
 	@Override
 	public List<Status> displayAllStatus() {

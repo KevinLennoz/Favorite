@@ -1,24 +1,15 @@
 package fr.eql.al35.service;
 
-
-import java.util.ArrayList;
-import java.util.Set;
-
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
-import fr.eql.al35.entity.Article;
 import fr.eql.al35.entity.Cart;
-import fr.eql.al35.entity.Product;
-import fr.eql.al35.entity.Stock;
 import fr.eql.al35.iservice.CartIService;
 
 @Service
-@Transactional
 public class CartService implements CartIService {
 
-	@Override
+	/*@Override
 	public int getCartProductsQuantity(Cart cart) {
 
 		Set<Article> articles = cart.getArticles();
@@ -76,5 +67,14 @@ public class CartService implements CartIService {
 			}
 		}
 		return inStock;
+	}*/
+	
+	@Override
+	public void sessionCartGenerator(Model model, Cart sessionCart) {
+		if(sessionCart == null) {
+			model.addAttribute("sessionCart", new Cart());
+		} else {
+			model.addAttribute("sessionCart", sessionCart);
+		}
 	}
 }

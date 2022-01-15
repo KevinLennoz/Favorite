@@ -2,20 +2,28 @@ package fr.eql.al35.iservice;
 
 import java.util.List;
 
-import fr.eql.al35.entity.Design;
-import fr.eql.al35.entity.Product;
-import fr.eql.al35.entity.ProductType;
+import fr.eql.al35.dto.ClothDTO;
+import fr.eql.al35.dto.DesignDTO;
+import fr.eql.al35.dto.ProductTypeDTO;
 
 public interface ProductIService {
 	
-	List<Product> displayAllProducts();
-	List<Product> displayAvailableProducts();
-	Product displayProductById(int id);
-	List<ProductType> displayAllCategories();
-	List<Product> displayByProductType(ProductType productType);
-	List<Design> displayAllDesign();
-	Product upDate(Integer id, Product product);
+	List<ClothDTO> displayAllProducts();
+	
+	List<ClothDTO> displayAvailableProducts();
+	
+	List<ProductTypeDTO> displayAllCategories();
+	
+	List<ClothDTO> displayByProductType(ProductTypeDTO productType);
+	
+	List<DesignDTO> displayAllDesign();
+	
+	ClothDTO upDate(Integer id, ClothDTO product);
+	
 	void setDeleteProduct(Integer id);
-	Product addProduct(Product product);
+	
+	ClothDTO addProduct(ClothDTO product);
+	
+	ClothDTO displayProductById(Integer id);
 
 }

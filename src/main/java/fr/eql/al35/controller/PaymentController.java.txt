@@ -47,7 +47,7 @@ public class PaymentController {
 		command = cmdService.createCommand(sessionCart, command); //ajouter les données du panier
 		
 		command.setUser(sessionUser); 
-		cmdService.saveUser(sessionUser); 
+		accountService.saveUser(sessionUser); 
 		
 		command.setReference(writeReference(sessionUser, command));
 		cmdService.saveCommand(command); //stocker en BDD command et addresses

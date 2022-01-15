@@ -24,13 +24,21 @@ import fr.eql.al35.iservice.CustomIService;
 @Controller
 public class CartController {
 
+	private final CartIService cartService;
+
+	private final ArticleIService articleService;
+
+	private final CustomIService customService;
 
 	@Autowired
-	private CartIService cartService;
-	@Autowired
-	private ArticleIService articleService;
-	@Autowired
-	private CustomIService customService;
+	private CartController(CartIService cartService,
+			ArticleIService articleService,
+			CustomIService customService) {
+		super();
+		this.cartService = cartService;
+		this.articleService = articleService;
+		this.customService = customService;
+	}
 
 	@PostMapping("/addToCart")
 	public String displayAddToCart(@ModelAttribute("article") Article article, @RequestParam("idProduct") Integer idProduct,
