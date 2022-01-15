@@ -54,12 +54,12 @@ public class ProductDelegateImpl implements ProductDelegate {
 	}
 
 	/*
-	 * GET :  "/clothes/product-types"
+	 * GET :  "/product-types"
 	 */
 	@Override
 	public List<ProductTypeDTO> getAllProductType() {
 		return WebClientGenericResponse.getListResponse(productWebclient,
-														PRODUCT_ENDPOINT + "/product-types",
+														"/product-types",
 														new ProductTypeDTO());		
 	}
 
@@ -74,12 +74,12 @@ public class ProductDelegateImpl implements ProductDelegate {
 	}
 
 	/*
-	 * GET :  "/clothes/designs"
+	 * GET :  "/designs"
 	 */
 	@Override
 	public List<DesignDTO> getAllDesigns() {
 		return WebClientGenericResponse.getListResponse(productWebclient,
-														PRODUCT_ENDPOINT + "/designs",
+														"/designs",
 														new DesignDTO());		
 	}
 
@@ -94,12 +94,12 @@ public class ProductDelegateImpl implements ProductDelegate {
 	}
 
 	/*
-	 * PUT :  "/clothes/{clothId}"
+	 * PUT :  "/clothes"
 	 */
 	@Override
 	public ClothDTO updateCloth(ClothDTO cloth) {
 		return WebClientGenericResponse.putResponse(productWebclient,
-													PRODUCT_ENDPOINT + "/" + cloth.getId(),
+													PRODUCT_ENDPOINT,
 													new ClothDTO());
 	}
 }
