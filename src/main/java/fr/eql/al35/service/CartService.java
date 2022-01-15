@@ -3,7 +3,7 @@ package fr.eql.al35.service;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import fr.eql.al35.entity.Cart;
+import fr.eql.al35.dto.Cart;
 import fr.eql.al35.iservice.CartIService;
 
 @Service

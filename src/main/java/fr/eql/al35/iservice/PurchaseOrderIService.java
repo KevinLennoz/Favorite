@@ -2,8 +2,8 @@ package fr.eql.al35.iservice;
 
 import java.util.List;
 
+import fr.eql.al35.dto.Cart;
 import fr.eql.al35.dto.PurchaseOrderDTO;
-import fr.eql.al35.entity.Cart;
 
 public interface PurchaseOrderIService {
 	

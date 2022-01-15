@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
@@ -13,10 +14,11 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class DesignTypeDTO {
+public class DesignTypeDTO implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
     private String label;
-
     private List<DesignDTO> designs;
 
 }

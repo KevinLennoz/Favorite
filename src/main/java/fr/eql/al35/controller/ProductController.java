@@ -47,10 +47,4 @@ public class ProductController {
 		model.addAttribute(PRODUCT_TYPE_PARAM, productType);
 		return "showcase";
 	}
-	
-	
-	
-	
-
-
 }

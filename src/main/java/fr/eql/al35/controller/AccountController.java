@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import fr.eql.al35.entity.Cart;
+import fr.eql.al35.dto.Cart;
 import fr.eql.al35.iservice.AccountIService;
 import fr.eql.al35.iservice.CartIService;
 

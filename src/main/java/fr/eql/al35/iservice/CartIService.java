@@ -1,8 +1,8 @@
 package fr.eql.al35.iservice;
 
-import fr.eql.al35.entity.Cart;
-
 import org.springframework.ui.Model;
+
+import fr.eql.al35.dto.Cart;
 
 public interface CartIService {
 	

@@ -40,7 +40,7 @@
 				                	<img class="pic-1" th:src="@{'/photos/product/' + ${product.photos[0].path}}">
 				                	<img class="pic-2" th:src="@{'/photos/product/' + ${product.photos[1].path}}">
 				                </a>
-				                <span class="soldout" th:if="${product.quantity == 0}">Rupture de Stock</span>
+				                <span class="soldout" th:if="${product.stocks.empty}">Rupture de Stock</span>
 			                </div>
 			                <div class="product-content">
 			                    <h3 class="title">

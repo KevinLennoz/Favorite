@@ -38,9 +38,12 @@ public class ProductDelegateImpl implements ProductDelegate {
 	 */
 	@Override
 	public List<ClothDTO> getAvailableProducts() {
-		return WebClientGenericResponse.getListResponse(productWebclient,
+		
+		List<ClothDTO> clothes = WebClientGenericResponse.getListResponse(productWebclient,
 														PRODUCT_ENDPOINT + "/available",
-														new ClothDTO());		
+														new ClothDTO());
+		clothes.stream().forEach(c -> c.setProductType(new ProductTypeDTO()));
+		return clothes;
 	}
 
 	/*

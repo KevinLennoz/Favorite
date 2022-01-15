@@ -1,9 +1,9 @@
-package fr.eql.al35.entity;
+package fr.eql.al35.dto;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.eql.al35.dto.OrderLineDTO;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +12,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString @EqualsAndHashCode @NoArgsConstructor @AllArgsConstructor
-public class Cart {
+public class Cart implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	
 	private Set<OrderLineDTO> orderLines = new HashSet<>();
 	
