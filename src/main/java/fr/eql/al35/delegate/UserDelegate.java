@@ -2,17 +2,18 @@ package fr.eql.al35.delegate;
 
 import java.util.List;
 
-import fr.eql.al35.entity.Address;
-import fr.eql.al35.entity.Gender;
-import fr.eql.al35.entity.User;
-import fr.eql.al35.entity.UserType;
+import fr.eql.al35.dto.AddressDTO;
+import fr.eql.al35.dto.GenderDTO;
+import fr.eql.al35.dto.UserDTO;
+import fr.eql.al35.dto.UserTypeDTO;
 
 public interface UserDelegate {
 
-	List<User> getAllUsers();
-	User getUserById(Integer userId);
-	List<Address> getAddressesByUserId(Integer userId);
-	List<Gender> getAllGenders();
-	List<UserType> getAllUserTypes();
+	List<UserDTO> getAllUsers();
+	UserDTO getUserById(Integer userId);
+	List<AddressDTO> getAddressesByUserId(Integer userId);
+	List<GenderDTO> getAllGenders();
+	List<UserTypeDTO> getAllUserTypes();
+	UserDTO saveUser(UserDTO user);
 
 }

@@ -7,45 +7,80 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import fr.eql.al35.entity.Address;
-import fr.eql.al35.entity.Gender;
-import fr.eql.al35.entity.User;
-import fr.eql.al35.entity.UserType;
-import fr.eql.al35.util.WebclientGenericResponse;
+import fr.eql.al35.dto.AddressDTO;
+import fr.eql.al35.dto.GenderDTO;
+import fr.eql.al35.dto.UserDTO;
+import fr.eql.al35.dto.UserTypeDTO;
+import fr.eql.al35.util.WebClientGenericResponse;
 
 @Service
 public class UserDelegateImpl implements UserDelegate {
 	
-	private WebClient userWebclient;
-	private static final String USER_ENDPOINT = "/users/";
+	private final WebClient userWebclient;
+	private static final String USER_ENDPOINT = "/users";
 
 	@Autowired
 	public UserDelegateImpl(@Qualifier("userWebclient") WebClient userWebclient) {
 		this.userWebclient = userWebclient;
 	}
 	
+	/*
+	 * GET :  "/users"
+	 */
 	@Override
-	public List<User> getAllUsers() {
-		return WebclientGenericResponse.getListResponse(userWebclient, USER_ENDPOINT, new User());
+	public List<UserDTO> getAllUsers() {
+		return WebClientGenericResponse.getListResponse(userWebclient,
+														USER_ENDPOINT,
+														new UserDTO());
 	}
 	
+	/*
+	 * GET :  "/users/{userId}"
+	 */
 	@Override
-	public User getUserById(Integer userId) {
-		return WebclientGenericResponse.getResponse(userWebclient, USER_ENDPOINT + userId, new User());
+	public UserDTO getUserById(Integer userId) {
+		return WebClientGenericResponse.getResponse(userWebclient,
+													USER_ENDPOINT  + "/" + userId,
+													new UserDTO());
 	}
 	
+	/*
+	 * GET :  "/users/{userId}/addresses"
+	 */
 	@Override
-	public List<Address> getAddressesByUserId(Integer userId) {
-		return WebclientGenericResponse.getListResponse(userWebclient, USER_ENDPOINT + userId + "/addresses", new Address());
+	public List<AddressDTO> getAddressesByUserId(Integer userId) {
+		return WebClientGenericResponse.getListResponse(userWebclient,
+														USER_ENDPOINT + "/" + userId + "/addresses",
+														new AddressDTO());
 	}
 
+	/*
+	 * GET :  "/users/genders"
+	 */
 	@Override
-	public List<Gender> getAllGenders() {
-		return WebclientGenericResponse.getListResponse(userWebclient, USER_ENDPOINT + "/genders", new Gender());
+	public List<GenderDTO> getAllGenders() {
+		return WebClientGenericResponse.getListResponse(userWebclient,
+														USER_ENDPOINT + "/genders",
+														new GenderDTO());
 	}
 	
+	/*
+	 * GET :  "/users/user-types"
+	 */
 	@Override
-	public List<UserType> getAllUserTypes() {
-		return WebclientGenericResponse.getListResponse(userWebclient, USER_ENDPOINT + "/user-types", new UserType());
+	public List<UserTypeDTO> getAllUserTypes() {
+		return WebClientGenericResponse.getListResponse(userWebclient,
+														USER_ENDPOINT + "/user-types",
+														new UserTypeDTO());	
+	}
+
+	/*
+	 * POST :  "/users"
+	 */
+	@Override
+	public UserDTO saveUser(UserDTO user) {
+		return WebClientGenericResponse.postResponse(userWebclient,
+													 USER_ENDPOINT,
+													 new UserDTO());
 	}
 }
