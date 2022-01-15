@@ -13,6 +13,7 @@ public class OrderLineDTO implements Serializable{
 	
     private Integer id;
     private Integer clothId;
+    private SizeDTO size;
     private Integer quantity;
     private Double price;
     private List<CustomDTO> customs;

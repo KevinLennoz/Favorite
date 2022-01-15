@@ -62,15 +62,15 @@
 					</div>
 						<form th:action="@{/addToCart}" th:object="${orderLine}" method="post" th:if="${!product.stocks.empty}">
 							<div id="formulaire" class="form-group">
-							<div id="product-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
-								<select  class="form-control form-control-sm">
-									<option th:each="stock : ${product.stocks}" th:disabled="${stock.quantity == 0}" th:value="${stock.size.label}" th:text="${stock.size.label}"></option>
-								</select>
-							</div>
-						
-							<div id="product-quantity" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Quantité :</span>
-								<input type="number" min=1 th:field="*{quantity}" class="form-control form-control-sm">
-							</div>
+								<div id="product-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
+									<select  th:field="*{size.label}" class="form-control form-control-sm">
+										<option th:each="stock : ${product.stocks}" th:disabled="${stock.quantity == 0}" th:value="${stock.size.label}" th:text="${stock.size.label}"></option>
+									</select>
+								</div>
+							
+								<div id="product-quantity" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Quantité :</span>
+									<input type="number" min=1 th:field="*{quantity}" class="form-control form-control-sm">
+								</div>
 							</div>
 							<input type="hidden" th:value="${product.id}" name="idProduct" />
 							

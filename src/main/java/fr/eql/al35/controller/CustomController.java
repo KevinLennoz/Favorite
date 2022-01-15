@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import fr.eql.al35.entity.Article;
-import fr.eql.al35.entity.Size;
+import fr.eql.al35.dto.OrderLineDTO;
+import fr.eql.al35.dto.SizeDTO;
 import fr.eql.al35.iservice.DesignIService;
 import fr.eql.al35.iservice.ProductIService;
 
@@ -21,18 +21,24 @@ public class CustomController {
 	private ProductIService productService;
 	@Autowired
 	private DesignIService designService;
-	private Size size;
-	private Integer quantity;
 	
+	private SizeDTO size;
+	private Integer quantity;
+
+	private CustomController(ProductIService productService, DesignIService designService) {
+		this.productService = productService;
+		this.designService = designService;
+	}
+
 	@PostMapping("/generateCustom")
-	public String displayGenrateCustom(@ModelAttribute("article") Article article, @RequestParam("idProduct") Integer idProduct,
+	public String displayGenrateCustom(@ModelAttribute("orderLine") OrderLineDTO orderLine, @RequestParam("idProduct") Integer idProduct,
 			 Model model) {
 		
 		String category = productService.displayProductById(idProduct).getProductType().getName();
-		size = article.getSize();
-		quantity = article.getQuantity();
+		size = orderLine.getSize();
+		quantity = orderLine.getQuantity();
 
-		return "redirect:/custom/"+category+"/"+idProduct;
+		return "redirect:/custom/" + category + "/" + idProduct;
 	}
 	
 	@GetMapping("/custom/{category}/{id}")
