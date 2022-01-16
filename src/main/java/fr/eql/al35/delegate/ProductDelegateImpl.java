@@ -24,16 +24,6 @@ public class ProductDelegateImpl implements ProductDelegate {
 	}
 
 	/*
-	 * GET :  "/clothes"
-	 */
-	@Override
-	public List<ClothDTO> getAllProducts() {
-		return WebClientGenericResponse.getListResponse(productWebclient,
-														PRODUCT_ENDPOINT,
-														new ClothDTO());
-	}
-
-	/*
 	 * GET :  "/clothes/available"
 	 */
 	@Override

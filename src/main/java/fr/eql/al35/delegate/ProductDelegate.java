@@ -8,8 +8,6 @@ import fr.eql.al35.dto.ProductTypeDTO;
 
 public interface ProductDelegate {
 
-	List<ClothDTO> getAllProducts();
-
 	List<ClothDTO> getAvailableProducts();
 
 	ClothDTO getClothById(Integer clothId);

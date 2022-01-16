@@ -8,8 +8,6 @@ import fr.eql.al35.dto.ProductTypeDTO;
 
 public interface ProductIService {
 	
-	List<ClothDTO> displayAllProducts();
-	
 	List<ClothDTO> displayAvailableProducts();
 	
 	List<ProductTypeDTO> displayAllCategories();

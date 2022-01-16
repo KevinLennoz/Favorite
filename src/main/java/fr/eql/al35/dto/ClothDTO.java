@@ -29,5 +29,6 @@ public class ClothDTO implements Serializable{
     private ProductTypeDTO productType;
     private List<StockDTO> stocks;
     private List<PhotoDTO> photos;
+    private Boolean available;
 
 }

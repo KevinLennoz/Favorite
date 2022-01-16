@@ -42,8 +42,11 @@
 					<div class="preview col-6">
 						<div class="preview-thumbnail-div col-2">
 						<ul class="preview-thumbnail nav nav-tabs">
-						  <li th:each="photo, iterstat : ${product.photos}" th:class="${iterstat.index}== 0  ?
-						   'active'"><a th:attr="data-target='#pic-'+(${iterstat.index}+1)" data-toggle="tab"><img th:src="@{'/photos/product/' + ${photo.path}}" th:alt="${photo.description}" /></a></li>
+						  <li th:each="photo, iterstat : ${product.photos}" th:class="${iterstat.index}== 0  ? 'active'">
+						  	<a th:attr="data-target='#pic-'+(${iterstat.index}+1)" data-toggle="tab">
+						   		<img th:src="@{'/photos/product/' + ${photo.path}}" th:alt="${photo.description}" />
+						   	</a>
+						  </li>
 						</ul>
 						</div>
 						<div class="preview-pic tab-content col-6">
@@ -60,7 +63,7 @@
 						</div>
 						<div id="product-description" th:text="${product.description}"></div>
 					</div>
-						<form th:action="@{/addToCart}" th:object="${orderLine}" method="post" th:if="${!product.stocks.empty}">
+						<form th:action="@{/addToCart}" th:object="${orderLine}" method="post" th:if="${not product.available}">
 							<div id="formulaire" class="form-group">
 								<div id="product-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
 									<select  th:field="*{size.label}" class="form-control form-control-sm">
@@ -79,7 +82,7 @@
 								<input type="submit" value="Ajouter au panier" class="btn btn-primary"/>
 							</div>
 						</form>
-						<span class="soldout" th:if="${product.stocks.empty}">Rupture de Stock</span>
+						<span class="soldout" th:if="${not product.available}">Rupture de Stock</span>
 					</div>
 				</div>
 			</div>

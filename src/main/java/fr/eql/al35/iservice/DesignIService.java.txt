@@ -2,9 +2,9 @@ package fr.eql.al35.iservice;
 
 import java.util.List;
 
-import fr.eql.al35.entity.Design;
+import fr.eql.al35.dto.DesignDTO;
 
 public interface DesignIService {
 
-	public List<Design> displayAllDesign();
+	public List<DesignDTO> displayAllDesign();
 }

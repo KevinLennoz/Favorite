@@ -13,31 +13,31 @@ import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.DesignDTO;
 import fr.eql.al35.dto.PhotoDTO;
 import fr.eql.al35.dto.ProductTypeDTO;
+import fr.eql.al35.dto.StockDTO;
 import fr.eql.al35.iservice.ProductIService;
 
 @Service
 public class ProductService implements ProductIService {
 
-	private final ProductDelegate productDelegate;
+    private final ProductDelegate productDelegate;
 
-	@Autowired
-	public ProductService(ProductDelegate productDelegate) {
-		this.productDelegate = productDelegate;
-	}
+    @Autowired
+    public ProductService(ProductDelegate productDelegate) {
+        this.productDelegate = productDelegate;
+    }
 
-	@Override
-	public List<ClothDTO> displayAllProducts() {
-		return productDelegate.getAllProducts();
-	}
-
-	@Override
-	public List<ClothDTO> displayAvailableProducts() {
-		return productDelegate.getAvailableProducts();
+    @Override
+    public List<ClothDTO> displayAvailableProducts() {
+        List<ClothDTO> clothes = productDelegate.getAvailableProducts();
+        clothes.stream().forEach(this::updateAvailability);
+        return clothes;
 	}
 
 	@Override
 	public ClothDTO displayProductById(Integer id) {
-		return productDelegate.getClothById(id);
+	    ClothDTO cloth = productDelegate.getClothById(id);
+	    updateAvailability(cloth);
+	    return cloth;
 	}
 
 	@Override
@@ -47,7 +47,9 @@ public class ProductService implements ProductIService {
 
 	@Override
 	public List<ClothDTO> displayByProductType(ProductTypeDTO productType) {
-		return productDelegate.getAllByProductType(productType.getName());
+	    List<ClothDTO> clothes = productDelegate.getAllByProductType(productType.getName());
+	    clothes.stream().forEach(this::updateAvailability);
+	    return clothes;
 	}
 
 	@Override
@@ -84,4 +86,9 @@ public class ProductService implements ProductIService {
 		cloth.setPhotos(photos);
 		return productDelegate.saveCloth(cloth);
 	}
+	
+    private void updateAvailability(ClothDTO c) {
+        List<StockDTO> stock = c.getStocks();
+        c.setAvailable(stock.stream().anyMatch(s -> s.getQuantity() > 0));
+    }
 }
