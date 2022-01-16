@@ -17,14 +17,13 @@ import fr.eql.al35.iservice.ProductIService;
 @Controller
 public class CustomController {
 	
-	@Autowired
 	private ProductIService productService;
-	@Autowired
 	private DesignIService designService;
 	
 	private SizeDTO size;
 	private Integer quantity;
 
+	@Autowired
 	private CustomController(ProductIService productService, DesignIService designService) {
 		this.productService = productService;
 		this.designService = designService;
@@ -44,13 +43,13 @@ public class CustomController {
 	@GetMapping("/custom/{category}/{id}")
 	public String displayCustom(@PathVariable String category, @PathVariable Integer id, Model model) {
 		
-		Article article = new Article();
-		article.setSize(size);
-		article.setQuantity(quantity);
+		OrderLineDTO orderLine = new OrderLineDTO();
+		orderLine.setSize(size);
+		orderLine.setQuantity(quantity);
 		model.addAttribute("product", productService.displayProductById(id));
 		model.addAttribute("categories", productService.displayAllCategories());
-		model.addAttribute("designs",designService.displayAllDesign());
-		model.addAttribute("article", article);
+		model.addAttribute("designs", designService.displayAllDesign());
+		model.addAttribute("orderLine", orderLine);
 		
 		return "custom";
 	}

@@ -58,14 +58,14 @@
 						<div id="product-price"><span>[[${#numbers.formatCurrency(product.price)}]]</span></div>
 						</div>
 						
-							<div id="infoArticle" class="form-group">
-							<div id="article-size" class="d-flex"> 
+							<div id="infoorderLine" class="form-group">
+							<div id="orderLine-size" class="d-flex"> 
 								<span style="margin-right: 10px">Taille :</span>
-								<span  th:text="${article.size.label}"></span>
+								<span  th:text="${orderLine.size.label}"></span>
 							</div>
-							<div id="article-qtty" class="d-flex"> 
+							<div id="orderLine-qtty" class="d-flex"> 
 								<span style="margin-right: 10px" >Quantité :</span>
-								<span th:text="${article.quantity}"></span>
+								<span th:text="${orderLine.quantity}"></span>
 							</div>
 							</div>
 					</div>
@@ -90,7 +90,7 @@
 							  </div>
 							</div>
 							</div>
-								<form th:action="@{/addCustomArticleToCart}" th:object="${article}" method="post">
+								<form th:action="@{/addCustomorderLineToCart}" th:object="${orderLine}" method="post">
 								<div class="custom1 d-flex flex-row">
 									<div class="custom1-titre"><h4 style="margin-right: 10px">Personnalisation 1 :</h4></div>
 									<div class="custom1-form d-flex">
@@ -101,8 +101,8 @@
 										</select>
 										<select name="locCustom1" class="form-control form-control-sm">
 											<option value=0>--Choisir Emplacment--</option>
-											<option th:each="productTypeLocation : ${product.productType.productTypeLocation}" th:value="${productTypeLocation.id}" th:text="${productTypeLocation.location.label}"></option>
-											<option value=0>Pas de personnalisation</option>										</select>
+											<option th:each="productTypeLocation : ${product.productType.locations}" th:value="${productTypeLocation.label}" th:text="${productTypeLocation.location.label}"></option>
+											<option value=''>Pas de personnalisation</option>										</select>
 									</div>
 								</div>
 								<div class="custom2 d-flex flex-row">
@@ -114,8 +114,8 @@
 											<option value=0>Pas de personnalisation</option>										</select>
 										<select name="locCustom2" class="form-control form-control-sm">
 											<option value=0>--Choisir Emplacment--</option>
-											<option th:each="productTypeLocation : ${product.productType.productTypeLocation}" th:value="${productTypeLocation.id}" th:text="${productTypeLocation.location.label}"></option>
-											<option value=0>Pas de personnalisation</option>
+											<option th:each="productTypeLocation : ${product.productType.locations}" th:value="${productTypeLocation.label}" th:text="${productTypeLocation.label}"></option>
+											<option value=''>Pas de personnalisation</option>
 										</select>
 									</div>
 								</div>
@@ -129,12 +129,12 @@
 										</select>
 										<select name="locCustom3" class="form-control form-control-sm">
 											<option value=0>--Choisir Emplacment--</option>
-											<option th:each="productTypeLocation : ${product.productType.productTypeLocation}" th:value="${productTypeLocation.id}" th:text="${productTypeLocation.location.label}"></option>
-											<option value=0>Pas de personnalisation</option>										</select>
+											<option th:each="productTypeLocation : ${product.productType.Locations}" th:value="${productTypeLocation.label}" th:text="${productTypeLocation.label}"></option>
+											<option value=''>Pas de personnalisation</option>										</select>
 									</div>
 								</div>
-							<input type="hidden" th:value="${article.quantity}" th:field="*{quantity}" />
-							<input type="hidden" th:value="${article.size.label}" th:field="*{size.label}" />
+							<input type="hidden" th:value="${orderLine.quantity}" th:field="*{quantity}" />
+							<input type="hidden" th:value="${orderLine.size.label}" th:field="*{size.label}" />
 							<input type="hidden" th:value="${product.id}" name="idProduct" />
 							<div class="button d-flex">
 							<input type="submit" value="Ajouter au panier" class="btn btn-primary"/>

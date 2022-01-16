@@ -63,7 +63,7 @@
 						</div>
 						<div id="product-description" th:text="${product.description}"></div>
 					</div>
-						<form th:action="@{/addToCart}" th:object="${orderLine}" method="post" th:if="${not product.available}">
+						<form th:action="@{/addToCart}" th:object="${orderLine}" method="post" th:if="${product.available}">
 							<div id="formulaire" class="form-group">
 								<div id="product-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
 									<select  th:field="*{size.label}" class="form-control form-control-sm">
@@ -72,7 +72,7 @@
 								</div>
 							
 								<div id="product-quantity" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Quantité :</span>
-									<input type="number" min=1 th:field="*{quantity}" class="form-control form-control-sm">
+									<input type="number" min=1 th:field="*{quantity}" required class="form-control form-control-sm">
 								</div>
 							</div>
 							<input type="hidden" th:value="${product.id}" name="idProduct" />
