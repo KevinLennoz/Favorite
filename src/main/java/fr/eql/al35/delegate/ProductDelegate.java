@@ -18,6 +18,8 @@ public interface ProductDelegate {
 
 	List<DesignDTO> getAllDesigns();
 
+	DesignDTO getDesignById(Integer designId);
+
 	ClothDTO saveCloth(ClothDTO cloth);
 
 	ClothDTO updateCloth(ClothDTO cloth);

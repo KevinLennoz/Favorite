@@ -12,6 +12,7 @@ public class CustomDTO implements Serializable{
 
     private Integer id;
     private Integer designId;
+    private DesignDTO design;
     private String locationLabel;
 
 

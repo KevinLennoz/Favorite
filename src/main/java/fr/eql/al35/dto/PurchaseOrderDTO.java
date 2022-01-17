@@ -10,7 +10,8 @@ import java.util.List;
 public class PurchaseOrderDTO  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
+    private Integer id;
     private  String reference;
     private  LocalDateTime creationDate;
     private  LocalDateTime shippingDate;

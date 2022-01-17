@@ -28,11 +28,11 @@ public class ProductDelegateImpl implements ProductDelegate {
 	 */
 	@Override
 	public List<ClothDTO> getAvailableProducts() {
-		
+
 		List<ClothDTO> clothes = WebClientGenericResponse.getListResponse(productWebclient,
 														PRODUCT_ENDPOINT + "/available",
 														new ClothDTO());
-		clothes.stream().forEach(c -> c.setProductType(new ProductTypeDTO()));
+		clothes.forEach(c -> c.setProductType(new ProductTypeDTO()));
 		return clothes;
 	}
 
@@ -53,7 +53,7 @@ public class ProductDelegateImpl implements ProductDelegate {
 	public List<ProductTypeDTO> getAllProductType() {
 		return WebClientGenericResponse.getListResponse(productWebclient,
 														"/product-types",
-														new ProductTypeDTO());		
+														new ProductTypeDTO());
 	}
 
 	/*
@@ -63,7 +63,7 @@ public class ProductDelegateImpl implements ProductDelegate {
 	public List<ClothDTO> getAllByProductType(String productTypeName) {
 		return WebClientGenericResponse.getListResponse(productWebclient,
 														PRODUCT_ENDPOINT + "/" + productTypeName,
-														new ClothDTO());			
+														new ClothDTO());
 	}
 
 	/*
@@ -73,7 +73,17 @@ public class ProductDelegateImpl implements ProductDelegate {
 	public List<DesignDTO> getAllDesigns() {
 		return WebClientGenericResponse.getListResponse(productWebclient,
 														"/designs",
-														new DesignDTO());		
+														new DesignDTO());
+	}
+
+	/*
+	 * GET :  "/designs/{designId}"
+	 */
+	@Override
+	public DesignDTO getDesignById(Integer designId) {
+		return WebClientGenericResponse.getResponse(productWebclient,
+				"/designs/" + designId,
+				new DesignDTO());
 	}
 
 	/*
@@ -83,7 +93,7 @@ public class ProductDelegateImpl implements ProductDelegate {
 	public ClothDTO saveCloth(ClothDTO cloth) {
 		return WebClientGenericResponse.postResponse(productWebclient,
 													 PRODUCT_ENDPOINT,
-													 new ClothDTO());		
+													 new ClothDTO());
 	}
 
 	/*

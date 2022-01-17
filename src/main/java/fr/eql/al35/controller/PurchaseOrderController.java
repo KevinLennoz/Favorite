@@ -18,7 +18,7 @@ import fr.eql.al35.iservice.PurchaseOrderIService;
 @Controller
 public class PurchaseOrderController {
 
-	private final PurchaseOrderIService purchaseOrderService;	
+	private final PurchaseOrderIService purchaseOrderService;
 	List<PurchaseOrderDTO> purchaseOrders = new ArrayList<>();
 	private static final String SESSION_USER_PARAM = "sessionUser";
 
@@ -32,15 +32,15 @@ public class PurchaseOrderController {
 		UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
 		purchaseOrders = purchaseOrderService.getAllByUserId(sessionUser.getId());
 		purchaseOrders.sort((o2,o1) -> o1.getCreationDate().compareTo(o2.getCreationDate()));
-		model.addAttribute("commands", purchaseOrders);
+		model.addAttribute("orders", purchaseOrders);
 		return "myOrders";
 	}
 
-	@GetMapping("/order/{id}")
+	@GetMapping("/orders/{id}")
 	public String displayCommand(@PathVariable Integer id, Model model, HttpSession session) {
 		UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
 		PurchaseOrderDTO order = purchaseOrderService.getPurchaseOrderById(id);
-		
+
 		if (order.getUserId().equals(sessionUser.getId())) {
 			model.addAttribute("commande", order);
 			return "/order";

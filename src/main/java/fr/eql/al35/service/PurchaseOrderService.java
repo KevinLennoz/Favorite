@@ -1,8 +1,7 @@
 package fr.eql.al35.service;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,12 +38,7 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 
 	@Override
 	public List<PurchaseOrderDTO> getAllByUserId(Integer userId) {
-		List<PurchaseOrderDTO> allPurchaseOrders = orderDelegate.getAllOrdersByUserId(userId);
-
-		return allPurchaseOrders.stream()
-				.filter(order -> order.getCreationDate()
-						.isBefore(LocalDateTime.now()))
-				.collect(Collectors.toList());
+		return globalDelegate.getOrdersByUser(userId);
 	}
 
 	@Override
