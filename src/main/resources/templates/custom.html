@@ -101,7 +101,7 @@
 										</select>
 										<select name="locCustom1" class="form-control form-control-sm">
 											<option value=0>--Choisir Emplacment--</option>
-											<option th:each="productTypeLocation : ${product.productType.locations}" th:value="${productTypeLocation.label}" th:text="${productTypeLocation.location.label}"></option>
+											<option th:each="productTypeLocation : ${product.productType.locations}" th:value="${productTypeLocation.label}" th:text="${productTypeLocation.label}"></option>
 											<option value=''>Pas de personnalisation</option>										</select>
 									</div>
 								</div>
