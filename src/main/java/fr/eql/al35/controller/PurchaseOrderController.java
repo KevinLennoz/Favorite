@@ -37,12 +37,12 @@ public class PurchaseOrderController {
 	}
 
 	@GetMapping("/orders/{id}")
-	public String displayCommand(@PathVariable Integer id, Model model, HttpSession session) {
+	public String displayOrder(@PathVariable Integer id, Model model, HttpSession session) {
 		UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
 		PurchaseOrderDTO order = purchaseOrderService.getPurchaseOrderById(id);
 
 		if (order.getUserId().equals(sessionUser.getId())) {
-			model.addAttribute("commande", order);
+			model.addAttribute("order", order);
 			return "/order";
 		} 	else {
 			return "/unauthorized";

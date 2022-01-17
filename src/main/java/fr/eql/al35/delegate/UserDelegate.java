@@ -15,5 +15,5 @@ public interface UserDelegate {
 	List<GenderDTO> getAllGenders();
 	List<UserTypeDTO> getAllUserTypes();
 	UserDTO saveUser(UserDTO user);
-
+	AddressDTO getAddressById(Integer addressId);
 }

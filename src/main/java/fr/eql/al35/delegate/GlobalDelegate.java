@@ -9,4 +9,6 @@ public interface GlobalDelegate {
 	void saveOrder(PurchaseOrderDTO order);
 
 	List<PurchaseOrderDTO> getOrdersByUser(Integer userId);
+
+	PurchaseOrderDTO getOrderById(Integer orderId);
 }
