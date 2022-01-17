@@ -22,6 +22,7 @@ public class DesignDTO implements Serializable{
     private String name;
     private String color;
     private Double price;
+    private DesignTypeDTO designType;
     private List<PhotoDTO> photos;
 
 }
