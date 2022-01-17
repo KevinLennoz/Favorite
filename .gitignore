@@ -52,3 +52,9 @@ local.properties
 .loadpath
 .factorypath
 .tern-project
+
+
+##############################
+## Vagrant
+##############################
+.vagrant/
