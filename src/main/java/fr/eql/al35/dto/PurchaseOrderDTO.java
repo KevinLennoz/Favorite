@@ -15,7 +15,7 @@ public class PurchaseOrderDTO  implements Serializable{
     private  String reference;
     private  LocalDateTime creationDate;
     private  LocalDateTime shippingDate;
-    private  LocalDateTime shippingRef;
+    private  String shippingRef;
     private  LocalDateTime deliveryDate;
     private  LocalDateTime cancelDate;
     private  Double taxInPrice;
@@ -23,7 +23,7 @@ public class PurchaseOrderDTO  implements Serializable{
     private  Integer userId;
     private  Integer deliveryAddress;
     private  Integer billingAddress;
-    private  Integer uuid;
+    private  String uuid;
     private Status status;
     private Vat vat;
 
