@@ -1,8 +1,11 @@
 package fr.eql.al35.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.eql.al35.delegate.ProductDelegate;
+import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +21,15 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 
 	private final OrderDelegate orderDelegate;
 	private final GlobalDelegate globalDelegate;
+	private final ProductDelegate productDelegate;
 
 	@Autowired
-	public PurchaseOrderService(OrderDelegate orderDelegate, GlobalDelegate globalDelegate) {
+	public PurchaseOrderService(OrderDelegate orderDelegate,
+								GlobalDelegate globalDelegate,
+								ProductDelegate productDelegate) {
 		this.orderDelegate = orderDelegate;
 		this.globalDelegate = globalDelegate;
+		this.productDelegate = productDelegate;
 	}
 
 	@Override
@@ -50,4 +57,10 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 	public List<PurchaseOrderDTO> getAllPurchaseOrders() {
 		return orderDelegate.getAllOrders();
 	}
+
+	@Override
+	public ArrayList<OrderLineForProductWSDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
+		return productDelegate.updateStock(orderLines);
+	}
+
 }
