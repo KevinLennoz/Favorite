@@ -1,7 +1,9 @@
 package fr.eql.al35.delegate;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -105,4 +107,12 @@ public class ProductDelegateImpl implements ProductDelegate {
 													PRODUCT_ENDPOINT,
 													new ClothDTO());
 	}
+
+	@Override
+	public ArrayList<OrderLineForProductWSDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
+		return WebClientGenericResponse.putResponse(productWebclient,
+													"/stocks",
+													new ArrayList<>());
+	}
+
 }

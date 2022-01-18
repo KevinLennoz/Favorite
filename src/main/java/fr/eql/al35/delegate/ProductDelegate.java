@@ -1,9 +1,11 @@
 package fr.eql.al35.delegate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.DesignDTO;
+import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import fr.eql.al35.dto.ProductTypeDTO;
 
 public interface ProductDelegate {
@@ -23,5 +25,7 @@ public interface ProductDelegate {
 	ClothDTO saveCloth(ClothDTO cloth);
 
 	ClothDTO updateCloth(ClothDTO cloth);
+
+    ArrayList<OrderLineForProductWSDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines);
 
 }
