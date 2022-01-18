@@ -33,25 +33,26 @@ public class CartController {
 			HttpSession session) {
 
 		if(cartService.enoughInStock(orderLine)){
+			cartService.updateOrderLineTotalPrice(orderLine);
 			cartService.addOrderLineToCart((Cart) session.getAttribute("sessionCart"), orderLine);
 			return "redirect:/products/all";
 		}else {
 			return "plusDeStock";
 		}
 	}
-	
+
 	@GetMapping("/cart")
 	public String displayCart(Model model, HttpSession session) {
-		
+
 		Cart sessionCart = (Cart) session.getAttribute("sessionCart");
-			
+		
 		model.addAttribute("cart", sessionCart);
 		model.addAttribute("orderLines", sessionCart.getOrderLines());
-		model.addAttribute("total", cartService.getTotalCartPrice(sessionCart));
-		
+		model.addAttribute("totalPrice", sessionCart.getTotalPrice());
+
 		return "cart";
 	}
-	
+
 	@PostMapping("/addCustomOrderLineToCart")
 	public String addCustomArticleToCart(@ModelAttribute("orderLine") OrderLineDTO orderLine,
 			Model model,
@@ -59,9 +60,9 @@ public class CartController {
 		
 		articleService.updateCustomsInfos(orderLine);		
 		return displayAddToCart(orderLine, session);
-
+		
 	}
-	
+
 	/* @PostMapping("/cart")
 	public String displayDeleteArticle(@RequestParam("index") Integer index, HttpSession session) {
 		Cart sessionCart = (Cart) session.getAttribute("sessionCart");

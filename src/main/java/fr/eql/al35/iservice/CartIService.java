@@ -13,6 +13,6 @@ public interface CartIService {
 
 	boolean enoughInStock(OrderLineDTO orderLine);
 
-	Double getTotalCartPrice(Cart cart);
+	void updateOrderLineTotalPrice(OrderLineDTO orderLine);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import fr.eql.al35.delegate.ProductDelegate;
 import fr.eql.al35.dto.Cart;
 import fr.eql.al35.dto.ClothDTO;
+import fr.eql.al35.dto.CustomDTO;
 import fr.eql.al35.dto.OrderLineDTO;
 import fr.eql.al35.dto.StockDTO;
 import fr.eql.al35.iservice.CartIService;
@@ -34,17 +35,6 @@ public class CartService implements CartIService {
 	}
 	
 	@Override
-	public Double getTotalCartPrice(Cart cart) {
-		Double total = 0.0;
-		
-		for (OrderLineDTO line : cart.getOrderLines()) {
-			total = total + (line.getQuantity() * line.getPrice());
-		}
-		
-		return total;
-	}
-	
-	@Override
 	public boolean enoughInStock(OrderLineDTO orderLine) {
 		List<StockDTO> stocks = productDelegate.getClothById(orderLine.getClothId()).getStocks();
 		
@@ -54,20 +44,42 @@ public class CartService implements CartIService {
 
 	@Override
 	public void addOrderLineToCart(Cart cart, OrderLineDTO orderLine) {
-		Set<OrderLineDTO> orderLines = cart.getOrderLines();
-		ClothDTO cloth = productDelegate.getClothById(orderLine.getClothId());
 		
+		//Récupération des lignes deja existantes dans le cart
+		Set<OrderLineDTO> orderLines = cart.getOrderLines();
+		
+		//Récupération du cloth à partir de son id
+		ClothDTO cloth = productDelegate.getClothById(orderLine.getClothId());
+
 		orderLine.setCloth(cloth);
 
 		//Récupération du prix unitaire du cloth
 		orderLine.setPrice(cloth.getPrice());
 		
+		//Récupération du prix total (quantité + customs)
+		updateOrderLineTotalPrice(orderLine);
+		
 		orderLines.add(orderLine);
+		
 		cart.setClothQuantity(cart.getClothQuantity() + orderLine.getQuantity());
-		cart.setTotalPrice(cart.getTotalPrice() + (orderLine.getPrice() * orderLine.getQuantity()));
+		cart.setTotalPrice(cart.getTotalPrice() + orderLine.getTotalPrice());
 	}
-	
 
+	@Override
+	public void updateOrderLineTotalPrice(OrderLineDTO orderLine) {
+		Double total = 0.0;
+		
+		for (CustomDTO custom : orderLine.getCustoms()) {
+
+			if (custom.getDesignId() != null) {
+				total += custom.getDesign().getPrice() * orderLine.getQuantity();				
+			}
+		}
+		
+		total += orderLine.getPrice() * orderLine.getQuantity();
+
+		orderLine.setTotalPrice(total);
+	}
 	
 /*
 	@Override

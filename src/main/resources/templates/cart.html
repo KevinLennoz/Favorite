@@ -47,12 +47,12 @@
 							</div>
 							<div id="orderLines-qtte"
 								class="d-flex flex-row align-items-center cloth-details">
-								<span class="text-grey">Qtté : <span
+								<span class="text-grey">Qté : <span
 									class="font-weight-bold" th:text="' ' + ${orderLine.quantity}"></span></span>
 							</div>
 							<div id="orderLines-price"
 								class="d-flex flex-row align-items-center cloth-details">
-								<span class="font-weight-bold">[[${#numbers.formatCurrency((orderLine.price)*(orderLine.quantity))}]]</span>
+								<span class="font-weight-bold">[[${#numbers.formatCurrency(orderLine.totalPrice)}]]</span>
 							</div>
 							<form class="trash" th:action="@{/cart}" method="post">
 								<input type="hidden" th:value="${iterstat.index}" name="index" />
