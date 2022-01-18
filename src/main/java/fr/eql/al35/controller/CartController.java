@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eql.al35.dto.Cart;
 import fr.eql.al35.dto.OrderLineDTO;
@@ -63,10 +64,10 @@ public class CartController {
 		
 	}
 
-	/* @PostMapping("/cart")
+	@PostMapping("/cart")
 	public String displayDeleteArticle(@RequestParam("index") Integer index, HttpSession session) {
 		Cart sessionCart = (Cart) session.getAttribute("sessionCart");
-		cartService.removeArticle(sessionCart, index);
+		cartService.removeOrderLine(sessionCart, index);
 		return "redirect:/cart";
-	}*/
+	}
 }

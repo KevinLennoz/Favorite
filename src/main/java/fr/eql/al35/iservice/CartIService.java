@@ -15,4 +15,6 @@ public interface CartIService {
 
 	void updateOrderLineTotalPrice(OrderLineDTO orderLine);
 
+	void removeOrderLine(Cart cart, Integer index);
+
 }
