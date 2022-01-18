@@ -2,20 +2,17 @@ package fr.eql.al35.delegate;
 
 import java.util.List;
 
+import fr.eql.al35.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import fr.eql.al35.dto.AddressDTO;
-import fr.eql.al35.dto.GenderDTO;
-import fr.eql.al35.dto.UserDTO;
-import fr.eql.al35.dto.UserTypeDTO;
 import fr.eql.al35.util.WebClientGenericResponse;
 
 @Service
 public class UserDelegateImpl implements UserDelegate {
-	
+
 	private final WebClient userWebclient;
 	private static final String USER_ENDPOINT = "/users";
 
@@ -23,7 +20,7 @@ public class UserDelegateImpl implements UserDelegate {
 	public UserDelegateImpl(@Qualifier("userWebclient") WebClient userWebclient) {
 		this.userWebclient = userWebclient;
 	}
-	
+
 	/*
 	 * GET :  "/users"
 	 */
@@ -33,7 +30,7 @@ public class UserDelegateImpl implements UserDelegate {
 														USER_ENDPOINT,
 														new UserDTO());
 	}
-	
+
 	/*
 	 * GET :  "/users/{userId}"
 	 */
@@ -43,7 +40,7 @@ public class UserDelegateImpl implements UserDelegate {
 													USER_ENDPOINT  + "/" + userId,
 													new UserDTO());
 	}
-	
+
 	/*
 	 * GET :  "/users/{userId}/addresses"
 	 */
@@ -63,7 +60,7 @@ public class UserDelegateImpl implements UserDelegate {
 														USER_ENDPOINT + "/genders",
 														new GenderDTO());
 	}
-	
+
 	/*
 	 * GET :  "/users/user-types"
 	 */
@@ -71,7 +68,7 @@ public class UserDelegateImpl implements UserDelegate {
 	public List<UserTypeDTO> getAllUserTypes() {
 		return WebClientGenericResponse.getListResponse(userWebclient,
 														USER_ENDPOINT + "/user-types",
-														new UserTypeDTO());	
+														new UserTypeDTO());
 	}
 
 	/*
@@ -82,5 +79,54 @@ public class UserDelegateImpl implements UserDelegate {
 		return WebClientGenericResponse.postResponse(userWebclient,
 													 USER_ENDPOINT,
 													 new UserDTO());
+	}
+	/*
+	 * PATCH :  "/users/userId"
+	 */
+	@Override
+	public UserDTO updateUser(Integer userId, UserDTO updatedUser) {
+		return WebClientGenericResponse.patchResponse(userWebclient,
+				USER_ENDPOINT + '/' + userId,
+				updatedUser);
+	}
+
+	/*
+	 * GET :  "/users/addresses/addressId"
+	 */
+	@Override
+	public AddressDTO getAddressById(Integer addressId) {
+		return WebClientGenericResponse.getResponse(userWebclient,
+				USER_ENDPOINT + "/addresses" + "/" + addressId,
+				new AddressDTO());
+	}
+
+	/*
+	 * GET :  "/users/paymodes/{payModeId}"
+	 */
+	@Override
+	public PayModeDTO getPayModeById(Integer payModeId) {
+		return WebClientGenericResponse.getResponse(userWebclient,
+				USER_ENDPOINT + "/paymodes" + "/" + payModeId,
+				new PayModeDTO());
+	}
+
+	/*
+	 * PATCH : /users/{userId}/unsubscribe
+	 */
+	@Override
+	public UserDTO unsubscribeUser(Integer userId, UserDTO updatedUser) {
+		return WebClientGenericResponse.patchResponse(userWebclient,
+				USER_ENDPOINT + "/" + userId + "/unsubscribe",
+				updatedUser);
+	}
+
+	/*
+	 * PATCH : /users/{userId}/subscribe
+	 */
+	@Override
+	public UserDTO subscribeUser(Integer userId, UserDTO updatedUser) {
+		return WebClientGenericResponse.patchResponse(userWebclient,
+				USER_ENDPOINT + "/" + userId + "/subscribe",
+				updatedUser);
 	}
 }

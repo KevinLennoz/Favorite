@@ -49,8 +49,8 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 	}
 
 	@Override
-	public PurchaseOrderDTO getPurchaseOrderById(Integer id) {
-		return orderDelegate.getOrderById(id);
+	public PurchaseOrderDTO getPurchaseOrderById(Integer orderId) {
+		return globalDelegate.getOrderById(orderId);
 	}
 
 	@Override
