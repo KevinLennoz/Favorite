@@ -16,7 +16,7 @@
 
 <div layout:fragment="productTypeNavBar">
 	<div id="nav-produit">
-		<nav id="list-product-type" class="navbar navbar-expand-md navbar-light bg-light text-center">
+		<nav id="list-cloth-type" class="navbar navbar-expand-md navbar-light bg-light text-center">
 			<ul id="wrappedProductType" class="navbar-nav collapse">
 				<li class="nav-item active">
 					<a class="nav-link" href="/products/all">Tous les produits</a>
@@ -56,22 +56,22 @@
 						
 					</div>
 					<div class="text d-flex flex-column col-6">
-					<div class="product-info ">
+					<div class="cloth-info ">
 						<div class="title d-flex">
-						<div id="product-name" th:text="${product.name}" style="margin-right:40px"></div>
-						<div id="product-price"><span>[[${#numbers.formatCurrency(product.price)}]]</span></div>
+						<div id="cloth-name" th:text="${product.name}" style="margin-right:40px"></div>
+						<div id="cloth-price"><span>[[${#numbers.formatCurrency(product.price)}]]</span></div>
 						</div>
-						<div id="product-description" th:text="${product.description}"></div>
+						<div id="cloth-description" th:text="${product.description}"></div>
 					</div>
 						<form th:action="@{/addToCart}" th:object="${orderLine}" method="post" th:if="${product.available}">
 							<div id="formulaire" class="form-group">
-								<div id="product-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
+								<div id="cloth-size" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Taille :</span>
 									<select  th:field="*{size.label}" class="form-control form-control-sm">
 										<option th:each="stock : ${product.stocks}" th:disabled="${stock.quantity == 0}" th:value="${stock.size.label}" th:text="${stock.size.label}"></option>
 									</select>
 								</div>
 							
-								<div id="product-quantity" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Quantité :</span>
+								<div id="cloth-quantity" class="d-flex col-6"> <span style="margin-right: 10px" class="col-3">Quantité :</span>
 									<input type="number" min=1 th:field="*{quantity}" required class="form-control form-control-sm">
 								</div>
 							</div>

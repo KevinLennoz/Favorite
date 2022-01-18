@@ -27,7 +27,7 @@
 			<h1 style="text-align:center;">
 		Détails de la commande <span th:text="${commande.reference}	"></span>
 	</h1>
-				<div id="product-admin" class="card-body">
+				<div id="cloth-admin" class="card-body">
 					<div>
 						<th:label>Commandée le :</th:label>
 						<th:label class="card-title"
@@ -71,7 +71,7 @@
 				</div>
 				</div>
 				<div style="margin-top:15px;" th:if="${commande.returnDate != null}" class="card">
-				<div  id="product-admin" class="card-body">
+				<div  id="cloth-admin" class="card-body">
 					<div >
 						<th:label>Retournée le :  </th:label>
 						<th:label class="card-title" th:text="${#temporals.format(commande.returnDate, 'dd-MMMM-yyyy', new java.util.Locale('fr', 'FR'))}"></th:label>

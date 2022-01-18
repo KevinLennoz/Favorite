@@ -11,8 +11,8 @@ public interface CartIService {
 
 	void addOrderLineToCart(Cart cart, OrderLineDTO orderLine);
 
-	Double getTotalCartPrice(Cart cart);
-
 	boolean enoughInStock(OrderLineDTO orderLine);
+
+	Double getTotalCartPrice(Cart cart);
 
 }

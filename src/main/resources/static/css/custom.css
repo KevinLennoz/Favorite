@@ -100,7 +100,7 @@ img {
     display: -ms-flexbox;
     display: flex; } }
 
-.product-info {
+.cloth-info {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -111,15 +111,15 @@ img {
       -ms-flex-direction: column;
           flex-direction: column; }
 
-#product-name, #product-price {
+#cloth-name, #cloth-price {
   text-transform: UPPERCASE;
   font-weight: bold; }
   
 
-#product-name, #product-description, #product-price, #article-qtty, .soldout {
+#cloth-name, #cloth-description, #cloth-price, #orderLine-qtty, .soldout {
   margin-bottom: 15px; }
 
-#product-name, #product-price {
+#cloth-name, #cloth-price {
   margin-top: 0; }
 
 .soldout{

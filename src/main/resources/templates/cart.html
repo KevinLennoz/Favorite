@@ -19,36 +19,36 @@
 						<span th:if="${cart.orderLines.empty}">Votre Panier est vide</span>
 						<a id="lienPanier" href="/products/all">Poursuivre mes Achats</a>
 					</div>
-					<div th:if="${not cart.orderLines.empty}" id="article"
+					<div th:if="${not cart.orderLines.empty}" id="orderLines"
 						class="d-flex flex-column p-2 bg-white "
-						th:each="article, iterstat : ${articles}">
-						<div id="article-info" class="d-flex flex-rox align-items-center p-2 bg-white ">
-							<div id="article-photo" class="mr-1">
+						th:each="orderLine, iterstat : ${cart.orderLines}">
+						<div id="orderLines-info" class="d-flex flex-rox align-items-center p-2 bg-white ">
+							<div id="orderLines-photo" class="mr-1">
 								<img class="rounded"
-									th:src="@{'/photos/product/' + ${article.product.photos[0].path}}"
-									alt="${article.product.photo[0].description}" width="70">
+									th:src="@{'/photos/product/' + ${orderLine.cloth.photos[0].path}}"
+									alt="${orderLine.cloth.photo[0].description}" width="70">
 							</div>
-							<div id="article-name"
-								class="d-flex flex-row align-items-center product-details">
-								<span class="font-weight-bold" th:text="${article.product.name}"></span>
+							<div id="orderLines-name"
+								class="d-flex flex-row align-items-center cloth-details">
+								<span class="font-weight-bold" th:text="${orderLine.cloth.name}"></span>
 							</div>
-							<div id="article-unit-price"
-								class="d-flex flex-row align-items-center product-details">
-								<span class="text-grey">[[${#numbers.formatCurrency(article.price)}]]</span>
+							<div id="orderLines-unit-price"
+								class="d-flex flex-row align-items-center cloth-details">
+								<span class="text-grey">[[${#numbers.formatCurrency(orderLine.price)}]]</span>
 							</div>
-							<div id="article-size"
-								class="d-flex flex-row align-items-center product-details">
+							<div id="orderLines-size"
+								class="d-flex flex-row align-items-center cloth-details">
 								<span class="text-grey">Taille :<span
-									class="font-weight-bold" th:text="' ' + ${article.size.label}"></span></span>
+									class="font-weight-bold" th:text="' ' + ${orderLine.size.label}"></span></span>
 							</div>
-							<div id="article-qtte"
-								class="d-flex flex-row align-items-center product-details">
+							<div id="orderLines-qtte"
+								class="d-flex flex-row align-items-center cloth-details">
 								<span class="text-grey">Qtté : <span
-									class="font-weight-bold" th:text="' ' + ${article.quantity}"></span></span>
+									class="font-weight-bold" th:text="' ' + ${orderLine.quantity}"></span></span>
 							</div>
-							<div id="article-price"
-								class="d-flex flex-row align-items-center product-details">
-								<span class="font-weight-bold">[[${#numbers.formatCurrency((article.price)*(article.quantity))}]]</span>
+							<div id="orderLines-price"
+								class="d-flex flex-row align-items-center cloth-details">
+								<span class="font-weight-bold">[[${#numbers.formatCurrency((orderLine.price)*(orderLine.quantity))}]]</span>
 							</div>
 							<form class="trash" th:action="@{/cart}" method="post">
 								<input type="hidden" th:value="${iterstat.index}" name="index" />
@@ -57,24 +57,25 @@
 						</div>
 						<div id="custom"
 							class="d-flex flex-row  align-items-center p-2 ml-5 bg-white"
-							th:each="custom : ${article.customs}">
+							th:each="custom : ${orderLine.customs}">
 							<div id="custom-photo" class="mr-1">
-								<img class="rounded"
+								<span th:text=${custom.design.photos[0]}></span>
+								<!--<img class="rounded"
 									th:src="@{'/photos/design/' + ${custom.design.photos[0].path}}"
-									alt="${custom.design.photo[0].description}" width="70">
+									alt="${custom.design.photo[0].description}" width="70"/>-->
 							</div>
 							<div id="design-name"
-								class="d-flex flex-row align-items-center product-details">
+								class="d-flex flex-row align-items-center cloth-details">
 								<span class="font-weight-bold" th:text="${custom.design.name}"></span>
 							</div>
 							<div id="design-location"
-								class="d-flex flex-row align-items-center product-details">
+								class="d-flex flex-row align-items-center cloth-details">
 								<span class="text-grey">Localisation : <span
 									class="font-weight-bold"
-									th:text="' ' + ${custom.productTypeLocation.location.label}"></span> </span>
+									th:text="' ' + ${custom.locationLabel}"></span></span>
 							</div>
 							<div id="design-price"
-								class="d-flex flex-row align-items-center product-details">
+								class="d-flex flex-row align-items-center cloth-details">
 								<span class="font-weight-bold">[[${#numbers.formatCurrency(custom.design.price)}]]</span>
 							</div>
 						</div>
@@ -82,14 +83,13 @@
 					</div>
 					<div  th:if="${not cart.orderLines.empty}"  id="cart-end"
 						class="d-flex flex-row align-items-center justify-content-space-beetwen p-2 bg-white">
-						<label>Total du panier : <span>[[${#numbers.formatCurrency(total)}]]</span> </label> 
+						<label>Total du panier : <span>[[${#numbers.formatCurrency(totalPrice)}]]</span> </label> 
 						<button class="btn btn-warning btn-block btn-lg ml-2 pay-button"
 							type="button" onclick="window.location.href = '/payment';">Proceder
 							au paiment</button>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </body>

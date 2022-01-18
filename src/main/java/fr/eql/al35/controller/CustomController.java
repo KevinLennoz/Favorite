@@ -30,23 +30,23 @@ public class CustomController {
 	}
 
 	@PostMapping("/generateCustom")
-	public String displayGenrateCustom(@ModelAttribute("orderLine") OrderLineDTO orderLine, @RequestParam("idProduct") Integer idProduct,
+	public String displayGenrateCustom(@ModelAttribute("orderLine") OrderLineDTO orderLine, @RequestParam("clothId") Integer clothId,
 			 Model model) {
 		
-		String category = productService.displayProductById(idProduct).getProductType().getName();
+		String category = productService.displayProductById(clothId).getProductType().getName();
 		size = orderLine.getSize();
 		quantity = orderLine.getQuantity();
 
-		return "redirect:/custom/" + category + "/" + idProduct;
+		return "redirect:/custom/" + category + "/" + clothId;
 	}
 	
-	@GetMapping("/custom/{category}/{id}")
-	public String displayCustom(@PathVariable String category, @PathVariable Integer id, Model model) {
+	@GetMapping("/custom/{category}/{clothId}")
+	public String displayCustom(@PathVariable String category, @PathVariable Integer clothId, Model model) {
 		
 		OrderLineDTO orderLine = new OrderLineDTO();
 		orderLine.setSize(size);
 		orderLine.setQuantity(quantity);
-		model.addAttribute("product", productService.displayProductById(id));
+		model.addAttribute("product", productService.displayProductById(clothId));
 		model.addAttribute("categories", productService.displayAllCategories());
 		model.addAttribute("designs", designService.displayAllDesign());
 		model.addAttribute("orderLine", orderLine);

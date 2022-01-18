@@ -70,7 +70,7 @@ body{
 	margin-left: auto;
 }
 
-#article-quantity{
+#orderLine-quantity{
 	position: absolute;
 	top: 7px;
 	right: 5px;

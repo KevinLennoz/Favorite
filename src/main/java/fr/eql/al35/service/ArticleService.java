@@ -1,36 +1,38 @@
 package fr.eql.al35.service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fr.eql.al35.delegate.ProductDelegate;
+import fr.eql.al35.dto.CustomDTO;
+import fr.eql.al35.dto.OrderLineDTO;
 import fr.eql.al35.iservice.ArticleIService;
 
 @Service
 public class ArticleService implements ArticleIService{
 
-	/*@Override
-	public void addProduit(Integer id, Article article) {
-		Optional<Product> product = productRepo.findById(id);
-		
-		if(product.isPresent()) {
-			article.setProduct(product.get());
-			article.setPrice(product.get().getPrice());
-		}
+	private ProductDelegate productDelegate;
+
+	@Autowired
+	private ArticleService(ProductDelegate productDelegate) {
+		this.productDelegate = productDelegate;
 	}
 	
 	@Override
-	public void addCustoms(List<Custom> customs, Article article) {
-		Set<Custom> articleCustoms = new HashSet<Custom>();
-		for (Custom custom : customs) {
-			articleCustoms.add(custom);
-			article.setPrice(article.getPrice()+custom.getPrice());
+	public void updateCustomsInfos(OrderLineDTO orderLine) {
+		List<CustomDTO> customs = orderLine.getCustoms();
+		
+		for (CustomDTO custom : customs) {
+			
+			int designId = custom.getDesign().getId();
+			
+			if (designId != 0) {
+				custom.setDesignId(designId);
+			    custom.setDesign(productDelegate.getDesignById(designId));
+			}
+			
 		}
-		article.setCustoms(articleCustoms);
-	}*/
-	
+	}
 }

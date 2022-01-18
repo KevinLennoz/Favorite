@@ -9,11 +9,11 @@ body {
 	border-top: 1px solid grey;
 }
 
-#article{
+#orderLine{
 	border-top: 1px solid grey;
 }
 
-#article-info {
+#orderLines-info {
     justify-content: space-between;
 }
 
@@ -35,7 +35,7 @@ body {
     font-size: 11px
 }
 
-.product-deta {
+.cloth-deta {
     margin-right: 70px
 }
 

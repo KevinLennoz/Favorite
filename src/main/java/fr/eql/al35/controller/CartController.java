@@ -44,52 +44,42 @@ public class CartController {
 			return "redirect:/products/all";
 		}else {
 			return "plusDeStock";
-		}	
+		}
 	}
-	/*
-	@PostMapping("/addCustomArticleToCart")
-	public String displayAddCustomArticleToCart(@ModelAttribute("article") Article article, @RequestParam("idProduct") Integer idProduct,
-			@RequestParam("idCustom1") Integer idCustom1 ,
-			@RequestParam("idCustom2") Integer idCustom2, @RequestParam("idCustom3") Integer idCustom3, 
-			@RequestParam("locCustom1") Integer locCustom1,@RequestParam("locCustom2") Integer locCustom2,
-			@RequestParam("locCustom3") Integer locCustom3, Model model,
-			HttpSession session) {
-
-		articleService.addProduit(idProduct, article);
-		List<Custom> customs = new ArrayList<Custom>();
-		if (idCustom1 != 0) {
-			System.out.println("AJOUT 1");
-			customService.addCustom(customs, idCustom1, locCustom1);
-		}
-		if (idCustom2 != 0) {
-			System.out.println("AJOUT 2");
-			customService.addCustom(customs, idCustom2, locCustom2);
-		}
-		if (idCustom3 != 0) {
-			System.out.println("AJOUT 3");
-			customService.addCustom(customs, idCustom3, locCustom3);
-		}
-		customs.forEach(System.out::println);
-		articleService.addCustoms(customs, article);
-		Cart sessionCart = (Cart) session.getAttribute("sessionCart");
-		cartService.addArticle(sessionCart, article);
-
-		return "redirect:/products/all";
-	}*/
-
+	
 	@GetMapping("/cart")
 	public String displayCart(Model model, HttpSession session) {
-
+		
 		Cart sessionCart = (Cart) session.getAttribute("sessionCart");
-
+		
+		System.out.println(sessionCart);
+		
 		model.addAttribute("cart", sessionCart);
 		model.addAttribute("orderLines", sessionCart.getOrderLines());
 		model.addAttribute("total", cartService.getTotalCartPrice(sessionCart));
-
+		
 		return "cart";
 	}
-	/*
-	@PostMapping("/cart")
+	
+	@PostMapping("/addCustomOrderLineToCart")
+	public String addCustomArticleToCart(@ModelAttribute("orderLine") OrderLineDTO orderLine,
+			Model model,
+			HttpSession session) {
+
+		System.out.println(orderLine);
+		
+		articleService.updateCustomsInfos(orderLine);
+		
+		System.out.println(orderLine);
+		
+		Cart sessionCart = (Cart) session.getAttribute("sessionCart");
+		
+		cartService.addOrderLineToCart(sessionCart, orderLine);
+
+		return "redirect:/products/all";
+	}
+	
+	/* @PostMapping("/cart")
 	public String displayDeleteArticle(@RequestParam("index") Integer index, HttpSession session) {
 		Cart sessionCart = (Cart) session.getAttribute("sessionCart");
 		cartService.removeArticle(sessionCart, index);

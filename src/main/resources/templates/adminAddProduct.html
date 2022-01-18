@@ -12,7 +12,7 @@
 			<div class="card">
 				<h3 class="title">Ajout d'un nouveau produit</h3>
 				<form th:action="@{/addProduct}" th:object="${product}" method="post" >
-				<table class="form-product" >
+				<table class="form-cloth" >
 					<tr>
 						<th><th:label class="card-label">Nom du produit : </th:label></th>
 						<td><input  class="card-input" th:value="${product.name}" contentEditable="true" name="name"></input></t>

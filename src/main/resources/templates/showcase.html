@@ -10,7 +10,7 @@
 	<body>
 		<div layout:fragment="productTypeNavBar">
 			<div id="nav-produit">
-				<nav id="list-product-type" class="navbar navbar-expand-md navbar-light bg-light text-center">
+				<nav id="list-cloth-type" class="navbar navbar-expand-md navbar-light bg-light text-center">
 					<ul id="wrappedProductType" class="navbar-nav collapse">
 						<li class="nav-item active">
 							<a class="nav-link" href="/products/all">Tous les produits</a>
@@ -34,20 +34,20 @@
 			    	<h3 class="no-article" th:if="${products.size == 0}"> Pas d'article pour le moment</h3>
 
 		            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-8" th:each="product : ${products}" th:unless="${product.refDeletionDate}">
-		            	<div class="product-grid mx-1 my-2">
-			                <div class="product-image">
+		            	<div class="cloth-grid mx-1 my-2">
+			                <div class="cloth-image">
 				                <a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}"> 
 				                	<img class="pic-1" th:src="@{'/photos/product/' + ${product.photos[0].path}}">
 				                	<img class="pic-2" th:src="@{'/photos/product/' + ${product.photos[1].path}}">
 				                </a>
 				                <span class="soldout" th:if="${not product.available}">Rupture de Stock</span>
 			                </div>
-			                <div class="product-content">
+			                <div class="cloth-content">
 			                    <h3 class="title">
 			                    	<a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}" th:text="${product.name}"></a>
 			                    </h3>
 			                    
-			                    <div class="product-stock-price">
+			                    <div class="cloth-stock-price">
 			                    	<span class="price">[[${#numbers.formatCurrency(product.price)}]]</span>
 			                    </div>
 			                </div>

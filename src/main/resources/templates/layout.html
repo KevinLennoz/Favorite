@@ -51,7 +51,7 @@
 					<div id="cart-container">
 						<a  href="/cart" th:if="${#session.getAttribute('sessionUser').userType.id == 3}">
 							<img id="cart-icon" src="/icons/cart.svg" alt="cart icon">
-							<span th:if="${!#session.getAttribute('sessionCart').orderLines.empty}" id="article-quantity" th:text="${!#session.getAttribute('sessionCart').orderLines.empty}"></span>
+							<span th:if="${#session.getAttribute('sessionCart').clothQuantity > 0}" id="orderLine-quantity" th:text="${#session.getAttribute('sessionCart').clothQuantity}"></span>
 						</a>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 		</div>		
 
 		<!-- Optional navBar -->
-		<div id="product-type-nav-bar" layout:fragment="productTypeNavBar" /></div>
+		<div id="cloth-type-nav-bar" layout:fragment="productTypeNavBar" /></div>
 
 		<!-- Content Section -->
 		<div id="center" layout:fragment="content">
