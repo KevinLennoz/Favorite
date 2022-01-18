@@ -8,21 +8,23 @@ import fr.eql.al35.dto.LocationDTO;
 import fr.eql.al35.dto.ProductTypeDTO;
 
 public interface ProductIService {
-	
+
+	List<ClothDTO> displayAllProducts();
+
 	List<ClothDTO> displayAvailableProducts();
-	
+
 	List<ProductTypeDTO> displayAllCategories();
-	
+
 	List<ClothDTO> displayByProductType(String productTypeName);
-	
+
 	List<DesignDTO> displayAllDesign();
-	
+
 	ClothDTO upDate(Integer id, ClothDTO product);
-	
+
 	void setDeleteProduct(Integer id);
-	
+
 	ClothDTO addProduct(ClothDTO product);
-	
+
 	ClothDTO displayProductById(Integer id);
 
 	List<LocationDTO> displayAllLocations(String productTypeName);

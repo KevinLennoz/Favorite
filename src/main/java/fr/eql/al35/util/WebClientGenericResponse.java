@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 public class WebClientGenericResponse {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(WebClientGenericResponse.class);
 
 	public static <T> List<T> getListResponse(WebClient webclient, String endpoint, T t){
@@ -32,7 +32,7 @@ public class WebClientGenericResponse {
 		return Collections.emptyList();
 	}
 
-	public static <T> T getResponse(WebClient webclient, String endpoint, T t){	
+	public static <T> T getResponse(WebClient webclient, String endpoint, T t){
 		try {
 			return (T) webclient.get()
 					.uri(endpoint)
@@ -47,7 +47,7 @@ public class WebClientGenericResponse {
 		return null;
 	}
 
-	public static <T> T postResponse(WebClient webclient, String endpoint, T t){	
+	public static <T> T postResponse(WebClient webclient, String endpoint, T t){
 		try {
 			return (T) webclient.post()
 					.uri(endpoint)
@@ -62,7 +62,7 @@ public class WebClientGenericResponse {
 		}
 		return null;
 	}
-	public static <T> T putResponse(WebClient webclient, String endpoint, T t){	
+	public static <T> T putResponse(WebClient webclient, String endpoint, T t){
 		try {
 			return (T) webclient.put()
 					.uri(endpoint)
@@ -77,7 +77,23 @@ public class WebClientGenericResponse {
 		}
 		return null;
 	}
-	
+
+	public static <T> T patchResponse(WebClient webclient, String endpoint, T t){
+		try {
+			return (T) webclient.patch()
+					.uri(endpoint)
+					.body(Mono.just(t), t.getClass())
+					.accept(MediaType.APPLICATION_JSON)
+					.acceptCharset(StandardCharsets.UTF_8)
+					.retrieve()
+					.bodyToMono(t.getClass())
+					.block();
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return null;
+	}
+
 	private WebClientGenericResponse() {
 	}
 }

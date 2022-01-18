@@ -1,5 +1,6 @@
 package fr.eql.al35.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -81,19 +82,17 @@ public class CartService implements CartIService {
 		orderLine.setTotalPrice(total);
 	}
 	
-/*
-	@Override
-	public Article getArticle(Cart cart, int index) {
-		ArrayList<Article> articles = new ArrayList<>(cart.getArticles());
-		return articles.get(index);
+	private OrderLineDTO getOrderLineFromSet(Cart cart, int index) {
+		List<OrderLineDTO> orderLines = new ArrayList<>(cart.getOrderLines());
+		return orderLines.get(index);
 	}
 
 	@Override
-	public void removeArticle(Cart cart, int index) {
-		Article article = this.getArticle(cart, index);
-		cart.getArticles().remove(article);
-		cart.setArticlesQuantity(cart.getArticlesQuantity()-article.getQuantity());
-		cart.setPrice(cart.getPrice()-article.getPrice()*article.getQuantity());
-	}*/
+	public void removeOrderLine(Cart cart, Integer index) {
 
+		OrderLineDTO orderLine = getOrderLineFromSet(cart, index);
+		cart.getOrderLines().remove(orderLine);
+		cart.setClothQuantity(cart.getClothQuantity() - orderLine.getQuantity());
+		cart.setTotalPrice(cart.getTotalPrice() - orderLine.getTotalPrice());
+	}
 }
