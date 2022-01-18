@@ -1,9 +1,7 @@
-Vagrant.configure("2") do |config| 
-
-	config.vm.box = "bento/ubuntu-18.04"
-	#config.vbguest.auto_update=false 
+Vagrant.configure("2") do |config|
 	
-	config.vm.define "jenkins", autostart: false do |jenkins| 
+	config.vm.define "jenkins", autostart: false do |jenkins|
+	    jenkins.vm.box = "bento/ubuntu-18.04"
 		jenkins.vm.hostname = "jenkins" 
 		jenkins.vm.network "private_network", ip: "192.168.33.10"
 		jenkins.vm.provision "jenkins-shell", type:"shell", path: "jenkins.sh"
@@ -15,7 +13,8 @@ Vagrant.configure("2") do |config|
 		end
 	end 
 	
-	config.vm.define "docker", autostart: false  do |docker| 
+	config.vm.define "docker", autostart: false  do |docker|
+	    docker.vm.box = "bento/ubuntu-20.04"
 		docker.vm.hostname = "docker" 
 		docker.vm.network "private_network", ip: "192.168.33.20" 
 		docker.vm.provision "shell", path: "docker.sh"
