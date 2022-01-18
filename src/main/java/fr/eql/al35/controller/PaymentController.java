@@ -2,12 +2,15 @@ package fr.eql.al35.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import fr.eql.al35.dto.Cart;
 import fr.eql.al35.dto.OrderLineDTO;
+import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import fr.eql.al35.dto.PurchaseOrderDTO;
 import fr.eql.al35.dto.UserDTO;
 import fr.eql.al35.service.PurchaseOrderService;
@@ -55,9 +58,11 @@ public class PaymentController {
     }
 
     @PostMapping("/newCommand")
-    public String createNewCommand(HttpSession session,
-                                   @ModelAttribute(SESSION_PURCHASE_ORDER_PARAM) PurchaseOrderDTO purchaseOrder) {
+    public String createPurchaseOrder(HttpSession session,
+                                      @ModelAttribute(SESSION_PURCHASE_ORDER_PARAM) PurchaseOrderDTO purchaseOrder) {
         UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
+
+        List<OrderLineForProductWSDTO> orderLines = new ArrayList<>();
 
         purchaseOrder.setUserId(sessionUser.getId());
         purchaseOrder.setReference(writeReference(sessionUser));
@@ -66,6 +71,12 @@ public class PaymentController {
                 purchaseOrder.getOrderLines().stream().mapToDouble(OrderLineDTO::getPrice).sum());
         purchaseOrder.setTaxOutPrice(purchaseOrder.getTaxInPrice());
         purchaseOrder.setUuid(UUID.randomUUID().toString());
+
+        purchaseOrder.getOrderLines().forEach(orderLine -> orderLines.add(
+                    new OrderLineForProductWSDTO(orderLine.getCloth(), orderLine.getSize(), orderLine.getQuantity())));
+
+        purchaseOrderService.updateStocks(orderLines);
+
         purchaseOrderService.savePurchaseOrder(purchaseOrder); //stocker en BDD command et addresses
 
         try {
