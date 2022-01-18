@@ -20,6 +20,8 @@ Vagrant.configure("2") do |config|
 		docker.vm.provision "shell", path: "docker.sh"
 		docker.vm.provider "virtualbox" do |vb|
 			vb.name ="docker"
+			vb.memory = "2048"
+			vb.cpus = 1
 		end
 	end
 	

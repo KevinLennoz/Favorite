@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "*********************CHECKOUT*********************"
-                git branch: 'main', url: 'https://github.com/DuvCharles/favorite-orderWS.git'
+                git branch: 'main', url: 'https://github.com/KevinLennoz/Favorite'
             }
         }
         
@@ -48,21 +48,25 @@ pipeline {
         
         stage('SSH transfer') {
             steps {
-                echo "*********************SSH TRANSFER*********************"
-                sh 'scp -v -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/OrderWS-Pipeline/Dockerfile vagrant@192.168.33.20:/home/vagrant/'
-                sh 'scp -v -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/OrderWS-Pipeline/target/*.jar vagrant@192.168.33.20:/home/vagrant/'
+                withCredentials([sshUserPrivateKey(credentialsId: '2631e1d0-85aa-40f1-a410-57f03f11fe86', keyFileVariable: 'SSH_KEY_FOR_FAVORITE')]) {
+                    echo "*********************SSH TRANSFER*********************"
+                    sh 'ssh -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 mkdir -p /home/vagrant/favorite && scp -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/favorite/Dockerfile vagrant@192.168.33.20:/home/vagrant/favorite/'
+                    sh 'scp -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/favorite/target/*.jar vagrant@192.168.33.20:/home/vagrant/favorite/'
+                }
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo "*********************DEPLOY TO STAGING*********************"
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker stop demo || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker rm demo || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker rmi demo || true'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker build -t demo .'
-                sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker run -d --name demo -p 8080:8080 demo'
-            }    
+                withCredentials([sshUserPrivateKey(credentialsId: '2631e1d0-85aa-40f1-a410-57f03f11fe86', keyFileVariable: 'SSH_KEY_FOR_FAVORITE')]) {
+                    echo "*********************DEPLOY TO STAGING*********************"
+                    sh 'ssh -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker stop favorite || true'
+                    sh 'ssh -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker rm favorite || true'
+                    sh 'ssh -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker rmi favorite || true'
+                    sh 'ssh -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker build -t favorite favorite/.'
+                    sh 'ssh -i $SSH_KEY_FOR_FAVORITE -v -o StrictHostKeyChecking=no vagrant@192.168.33.20 sudo docker run -d --name favorite -p 9090:9090 favorite'
+                }
+            }
         }
     }
 }
