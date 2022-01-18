@@ -1,12 +1,13 @@
 Vagrant.configure("2") do |config| 
 
 	config.vm.box = "bento/ubuntu-18.04"
-	config.vbguest.auto_update=false 
+	#config.vbguest.auto_update=false 
 	
 	config.vm.define "jenkins", autostart: false do |jenkins| 
 		jenkins.vm.hostname = "jenkins" 
 		jenkins.vm.network "private_network", ip: "192.168.33.10"
-		jenkins.vm.provision "shell", path: "jenkins.sh"
+		jenkins.vm.provision "jenkins-shell", type:"shell", path: "jenkins.sh"
+		jenkins.vm.provision "sonarqube-shell", after: "jenkins-shell", type: "shell", path: "sonarqube.sh"
 		jenkins.vm.provider "virtualbox" do |vb|
 			vb.name ="jenkins"
 			vb.memory = "2048"
