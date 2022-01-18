@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @EqualsAndHashCode
 public class PurchaseOrderDTO  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
