@@ -60,7 +60,7 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 
 	@Override
 	public ArrayList<OrderLineForProductWSDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
-		return productDelegate.updateStock(orderLines);
+		return productDelegate.updateStocks(orderLines);
 	}
 
 }
