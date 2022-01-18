@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<div layout:fragment="content">
-		
+
 			<div id="users-list" class="container-fluid col-12">
 				<div id="title">
 					<h3>Liste des produits</h3>
@@ -27,8 +27,8 @@
 							<th scope="col">Nom</th>
 							<th scope="col">Photo</th>
 							<th scope="col">Reference</th>
-							<th scope="col">Type de produit</th>	
-							<th scope="col">Description</th>	
+							<th scope="col">Type de produit</th>
+							<th scope="col">Description</th>
 							<th scope="col">Date de création</th>
 							<th scope="col">Date de suppression</th>
 							<th scope="col">Prix unitaire en €</th>
@@ -37,31 +37,31 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="product : ${products}">
-							<td th:text="${product.id}" scope="row"></td>
-							<td th:text="${product.name}"></td>
-							<td> 
-								<img th:src="@{'/photos/product/' + ${product.photos[0].path}}" th:alt="${product.photos[0].description}" width="50" height="50"/>
-								
-							</td>
-							<td th:text="${product.reference}"></td>								
-							<td th:text="${product.productType}"></td>
-							<td id="product-description" th:text="${product.description}"></td>
-							<td th:text="${#temporals.format(product.refCreationDate,'dd/MM/yyyy')}"></td>
-							<td th:text="${#temporals.format(product.refDeletionDate,'dd/MM/yyyy')}"></td>
-							<td th:text="${product.price}"></td>							
-							<td th:text="${product.quantity}"></td>
-							
+						<tr th:each="cloth : ${clothes}">
+							<td th:text="${cloth.id}" scope="row"></td>
+							<td th:text="${cloth.name}"></td>
 							<td>
-								<a id="card-button-4" class="btn btn-dark btn-sm" th:href="@{'/admin/products' + '/{id}'(id=${product.id})}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+								<img th:src="@{'/photos/product/' + ${cloth.photos[0].path}}" th:alt="${cloth.photos[0].description}" width="50" height="50"/>
+
+							</td>
+							<td th:text="${cloth.reference}"></td>
+							<td th:text="${cloth.productType.name}"></td>
+							<td id="product-description" th:text="${cloth.description}"></td>
+							<td th:text="${#temporals.format(cloth.refCreationDate,'dd/MM/yyyy')}"></td>
+							<td th:text="${#temporals.format(cloth.refDeletionDate,'dd/MM/yyyy')}"></td>
+							<td th:text="${cloth.price}"></td>
+							<td th:text="${cloth.quantityInStock}"></td>
+
+							<td>
+								<a id="card-button-4" class="btn btn-dark btn-sm" th:href="@{'/admin/products' + '/{id}'(id=${cloth.id})}"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-</svg> Editer</a>							
+</svg> Editer</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-		</div>	
+		</div>
 	</body>
 </html>

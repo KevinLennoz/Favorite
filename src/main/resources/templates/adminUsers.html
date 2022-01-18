@@ -22,7 +22,7 @@
 						<tr>
 							<th scope="col">Id</th>
 							<th scope="col">Type</th>
-							<th scope="col">Genre</th>		
+							<th scope="col">Genre</th>
 							<th scope="col">Nom</th>
 							<th scope="col">Prénom</th>
 							<th scope="col">Login</th>
@@ -41,12 +41,12 @@
 						<tr th:each="user : ${users}">
 							<td th:text="${user.id}" scope="row"></td>
 							<td th:text="${user.userType.name}"></td>
-							<td th:text="${user.gender.name}"></td>								
+							<td th:text="${user.gender.name}"></td>
 							<td th:text="${user.surname}"></td>
 							<td th:text="${user.name}"></td>
 							<td th:text="${user.login}"></td>
 							<td th:text="${user.password}"></td>
-							<td th:text="${user.email}"></td>							
+							<td th:text="${user.email}"></td>
 							<td th:text="${#temporals.format(user.birthDate,'dd/MM/yyyy')}"></td>
 							<td th:text="${user.phoneNumber}"></td>
 							<td th:text="${#temporals.format(user.subscribingDate,'dd/MM/yyyy à HH:mm')}"></td>
@@ -67,14 +67,14 @@
 							</td>
 							<td>
 								<div id="dropdown-commands-container" class="btn-group dropleft">
-									<button id="card-button-13" class="btn btn-dark btn-sm " type="button"  data-bs-toggle="dropdown" aria-expanded="false" th:if="${user.commands.size() > 0}">
+									<button id="card-button-13" class="btn btn-dark btn-sm " type="button"  data-bs-toggle="dropdown" aria-expanded="false" th:if="${user.purchaseOrders.size() > 0}">
 										Commandes
 									</button>
 									<ul id="command-list" class="dropdown-menu" aria-labelledby="card-button-13">
-										<li th:each="command : ${user.commands}">
-											<a th:href="@{/admin/commands/{id}(id=${command.id})}">
-												<b><span class="item-command-name" th:text="${command.reference}"></span></b><br/>
-												<span class="item-command-detail" th:text="'Status: ' + ${command.status.name}"></span>
+										<li th:each="order : ${user.purchaseOrders}">
+											<a th:href="@{/admin/orders/{id}(id=${order.id})}">
+												<b><span class="item-command-name" th:text="${order.reference}"></span></b><br/>
+												<span class="item-command-detail" th:text="'Status: ' + ${order.status.name}"></span>
 												<span><hr></span>
 											</a>
 										</li>
@@ -88,12 +88,12 @@
   										<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 									</svg>
 									Editer
-								</a>							
+								</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-		</div>	
+		</div>
 	</body>
 </html>

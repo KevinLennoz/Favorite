@@ -27,10 +27,13 @@ public class PurchaseOrderDTO implements Serializable {
     private Double taxInPrice;
     private Double taxOutPrice;
     private Integer userId;
+    private UserDTO user;
     private Integer deliveryAddressId;
     private AddressDTO deliveryAddress;
     private Integer billingAddressId;
     private AddressDTO billingAddress;
+    private Integer payModeId;
+    private PayModeDTO payMode;
     private Integer uuid;
     private Status status;
     private Vat vat;

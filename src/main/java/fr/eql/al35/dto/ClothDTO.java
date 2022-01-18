@@ -18,7 +18,7 @@ import java.util.List;
 public class ClothDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
     private Integer id;
     private String reference;
     private String name;
@@ -30,5 +30,6 @@ public class ClothDTO implements Serializable{
     private List<StockDTO> stocks;
     private List<PhotoDTO> photos;
     private Boolean available;
+    private Integer quantityInStock;
 
 }

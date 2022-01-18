@@ -2,10 +2,7 @@ package fr.eql.al35.delegate;
 
 import java.util.List;
 
-import fr.eql.al35.dto.AddressDTO;
-import fr.eql.al35.dto.GenderDTO;
-import fr.eql.al35.dto.UserDTO;
-import fr.eql.al35.dto.UserTypeDTO;
+import fr.eql.al35.dto.*;
 
 public interface UserDelegate {
 
@@ -15,5 +12,9 @@ public interface UserDelegate {
 	List<GenderDTO> getAllGenders();
 	List<UserTypeDTO> getAllUserTypes();
 	UserDTO saveUser(UserDTO user);
+	UserDTO updateUser(Integer userId, UserDTO updatedUser);
 	AddressDTO getAddressById(Integer addressId);
+	PayModeDTO getPayModeById(Integer payModeId);
+	UserDTO unsubscribeUser(Integer userId, UserDTO updatedUser);
+	UserDTO subscribeUser(Integer userId, UserDTO updatedUser);
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class UserDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
     private Integer id;
     private String login;
     private String password;
@@ -28,4 +28,5 @@ public class UserDTO implements Serializable{
     private GenderDTO gender;
     private UserTypeDTO userType;
     private List<AddressDTO> addresses;
+    private List<PurchaseOrderDTO> purchaseOrders;
 }

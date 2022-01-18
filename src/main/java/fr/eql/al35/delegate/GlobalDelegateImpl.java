@@ -2,6 +2,7 @@ package fr.eql.al35.delegate;
 
 import fr.eql.al35.dto.CustomDTO;
 import fr.eql.al35.dto.OrderLineDTO;
+import fr.eql.al35.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,8 @@ public class GlobalDelegateImpl implements GlobalDelegate {
 		getClothForOrderLine(purchaseOrder);
 		purchaseOrder.setDeliveryAddress(userDelegate.getAddressById(purchaseOrder.getDeliveryAddressId()));
 		purchaseOrder.setBillingAddress(userDelegate.getAddressById(purchaseOrder.getBillingAddressId()));
+		purchaseOrder.setPayMode(userDelegate.getPayModeById(purchaseOrder.getPayModeId()));
+		purchaseOrder.setUser(userDelegate.getUserById(purchaseOrder.getUserId()));
 
 		return purchaseOrder;
 	}
@@ -64,5 +67,19 @@ public class GlobalDelegateImpl implements GlobalDelegate {
 				}
 			}
 
+	}
+
+	@Override
+	public List<UserDTO> getAllUsers() {
+		List<UserDTO> users = userDelegate.getAllUsers();
+		users.forEach(user -> user.setPurchaseOrders(this.getOrdersByUser(user.getId())));
+		return users;
+	}
+
+	@Override
+	public UserDTO getUserById(Integer userId) {
+		UserDTO user = userDelegate.getUserById(userId);
+		user.setPurchaseOrders(this.getOrdersByUser(userId));
+		return user;
 	}
 }
