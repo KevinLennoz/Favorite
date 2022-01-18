@@ -40,11 +40,12 @@ public class ProductController {
 		model.addAttribute(ORDER_LINE_PARAM, new OrderLineDTO());
 		return "productSheet";
 	}
-	@GetMapping("/products/{productType}")
-	public String displayProductsByType(@PathVariable ProductTypeDTO productType, Model model) {
+	
+	@GetMapping("/products/{productTypeName}")
+	public String displayProductsByType(@PathVariable String productTypeName, Model model) {
 		model.addAttribute(CATEGORIES_PARAM, productService.displayAllCategories());
-		model.addAttribute(PRODUCTS_PARAM, productService.displayByProductType(productType));
-		model.addAttribute(PRODUCT_TYPE_PARAM, productType);
+		model.addAttribute(PRODUCTS_PARAM, productService.displayByProductType(productTypeName));
+		model.addAttribute(PRODUCT_TYPE_PARAM, productService.getProductTypeByName(productTypeName));
 		return "showcase";
 	}
 }

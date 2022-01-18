@@ -75,7 +75,7 @@
 									<input type="number" min=1 th:field="*{quantity}" required class="form-control form-control-sm">
 								</div>
 							</div>
-							<input type="hidden" th:value="${product.id}" name="idProduct" />
+							<input type="hidden" th:value="${product.id}" name="clothId" />
 							
 							<div class="buttons d-flex">
 								<input type="submit" value="Personnaliser !" class="btn btn-primary" style="margin-right:20px" th:formaction="@{'/generateCustom'}"/>

@@ -3,7 +3,9 @@ package fr.eql.al35.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import fr.eql.al35.delegate.ProductDelegate;
 import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.DesignDTO;
+import fr.eql.al35.dto.LocationDTO;
 import fr.eql.al35.dto.PhotoDTO;
 import fr.eql.al35.dto.ProductTypeDTO;
 import fr.eql.al35.dto.StockDTO;
@@ -19,25 +22,25 @@ import fr.eql.al35.iservice.ProductIService;
 @Service
 public class ProductService implements ProductIService {
 
-    private final ProductDelegate productDelegate;
+	private final ProductDelegate productDelegate;
 
-    @Autowired
-    public ProductService(ProductDelegate productDelegate) {
-        this.productDelegate = productDelegate;
-    }
+	@Autowired
+	public ProductService(ProductDelegate productDelegate) {
+		this.productDelegate = productDelegate;
+	}
 
-    @Override
-    public List<ClothDTO> displayAvailableProducts() {
-        List<ClothDTO> clothes = productDelegate.getAvailableProducts();
-        clothes.stream().forEach(this::updateAvailability);
-        return clothes;
+	@Override
+	public List<ClothDTO> displayAvailableProducts() {
+		List<ClothDTO> clothes = productDelegate.getAvailableProducts();
+		clothes.stream().forEach(this::updateAvailability);
+		return clothes;
 	}
 
 	@Override
 	public ClothDTO displayProductById(Integer id) {
-	    ClothDTO cloth = productDelegate.getClothById(id);
-	    updateAvailability(cloth);
-	    return cloth;
+		ClothDTO cloth = productDelegate.getClothById(id);
+		updateAvailability(cloth);
+		return cloth;
 	}
 
 	@Override
@@ -46,10 +49,29 @@ public class ProductService implements ProductIService {
 	}
 
 	@Override
-	public List<ClothDTO> displayByProductType(ProductTypeDTO productType) {
-	    List<ClothDTO> clothes = productDelegate.getAllByProductType(productType.getName());
-	    clothes.stream().forEach(this::updateAvailability);
-	    return clothes;
+	public List<ClothDTO> displayByProductType(String productTypeName) {
+		List<ClothDTO> clothes = productDelegate.getAllByProductType(productTypeName);
+		clothes.stream().forEach(this::updateAvailability);
+		return clothes;
+	}
+
+	@Override
+	public List<LocationDTO> displayAllLocations(String productTypeName) {
+		ProductTypeDTO type = getProductTypeByName(productTypeName);
+		return type != null ? type.getLocations() : Collections.emptyList();
+	}
+
+	@Override
+	public ProductTypeDTO getProductTypeByName(String productTypeName) {
+		Optional<ProductTypeDTO> type = productDelegate.getAllProductType()
+				.stream()
+				.filter(t -> t.getName().equals(productTypeName))
+				.findFirst();
+
+		if (type.isPresent()) {
+			return type.get();
+		}
+		return null;
 	}
 
 	@Override
@@ -86,9 +108,9 @@ public class ProductService implements ProductIService {
 		cloth.setPhotos(photos);
 		return productDelegate.saveCloth(cloth);
 	}
-	
-    private void updateAvailability(ClothDTO c) {
-        List<StockDTO> stock = c.getStocks();
-        c.setAvailable(stock.stream().anyMatch(s -> s.getQuantity() > 0));
-    }
+
+	private void updateAvailability(ClothDTO c) {
+		List<StockDTO> stock = c.getStocks();
+		c.setAvailable(stock.stream().anyMatch(s -> s.getQuantity() > 0));
+	}
 }

@@ -16,10 +16,10 @@
 				<div class="col-md-8">
 					<div class="p-2 d-flex flex-column" style="justify-content:space-beetwen">
 						<h4>Panier</h4>
-						<span th:if="${cart.articlesQuantity == 0}">Votre Panier est vide</span>
+						<span th:if="${cart.orderLines.empty}">Votre Panier est vide</span>
 						<a id="lienPanier" href="/products/all">Poursuivre mes Achats</a>
 					</div>
-					<div th:if="${cart.articlesQuantity > 0}" id="article"
+					<div th:if="${not cart.orderLines.empty}" id="article"
 						class="d-flex flex-column p-2 bg-white "
 						th:each="article, iterstat : ${articles}">
 						<div id="article-info" class="d-flex flex-rox align-items-center p-2 bg-white ">
@@ -80,7 +80,7 @@
 						</div>
 						
 					</div>
-					<div  th:if="${cart.articlesQuantity > 0}" id="cart-end"
+					<div  th:if="${not cart.orderLines.empty}"  id="cart-end"
 						class="d-flex flex-row align-items-center justify-content-space-beetwen p-2 bg-white">
 						<label>Total du panier : <span>[[${#numbers.formatCurrency(total)}]]</span> </label> 
 						<button class="btn btn-warning btn-block btn-lg ml-2 pay-button"

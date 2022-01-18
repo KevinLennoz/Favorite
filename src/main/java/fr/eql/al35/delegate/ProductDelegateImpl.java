@@ -57,12 +57,12 @@ public class ProductDelegateImpl implements ProductDelegate {
 	}
 
 	/*
-	 * GET :  "/clothes/{productTypeName}"
+	 * GET :  "/clothes/product-types/{productTypeName}"
 	 */
 	@Override
 	public List<ClothDTO> getAllByProductType(String productTypeName) {
 		return WebClientGenericResponse.getListResponse(productWebclient,
-														PRODUCT_ENDPOINT + "/" + productTypeName,
+														PRODUCT_ENDPOINT + "/product-types/" + productTypeName,
 														new ClothDTO());
 	}
 

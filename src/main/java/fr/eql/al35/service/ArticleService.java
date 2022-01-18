@@ -5,21 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.eql.al35.entity.Article;
-import fr.eql.al35.entity.Custom;
-import fr.eql.al35.entity.Product;
 import fr.eql.al35.iservice.ArticleIService;
 
 @Service
-@Transactional
 public class ArticleService implements ArticleIService{
 
-	@Override
+	/*@Override
 	public void addProduit(Integer id, Article article) {
 		Optional<Product> product = productRepo.findById(id);
 		
@@ -37,6 +31,6 @@ public class ArticleService implements ArticleIService{
 			article.setPrice(article.getPrice()+custom.getPrice());
 		}
 		article.setCustoms(articleCustoms);
-	}
+	}*/
 	
 }

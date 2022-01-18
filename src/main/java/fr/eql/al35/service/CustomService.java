@@ -6,14 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.eql.al35.entity.Custom;
-import fr.eql.al35.entity.Design;
-import fr.eql.al35.entity.ProductTypeLocation;
 import fr.eql.al35.iservice.CustomIService;
 
 @Service
 public class CustomService implements CustomIService {
-
+/*
 	@Override
 	public void addCustom(List<Custom> customs, Integer idDesign, Integer idLocation) {
 		Custom custom = new Custom();
@@ -25,5 +22,5 @@ public class CustomService implements CustomIService {
 			custom.setPrice(design.get().getPrice());
 		}
 		customs.add(custom);
-	}
+	}*/
 }

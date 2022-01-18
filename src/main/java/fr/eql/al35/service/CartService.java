@@ -1,13 +1,29 @@
 package fr.eql.al35.service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import fr.eql.al35.delegate.ProductDelegate;
 import fr.eql.al35.dto.Cart;
+import fr.eql.al35.dto.OrderLineDTO;
+import fr.eql.al35.dto.StockDTO;
 import fr.eql.al35.iservice.CartIService;
 
 @Service
 public class CartService implements CartIService {
+
+	private final ProductDelegate productDelegate;
+
+	@Autowired
+	private CartService(ProductDelegate productDelegate) {
+		this.productDelegate = productDelegate;
+	}
+
 
 	/*@Override
 	public int getCartProductsQuantity(Cart cart) {
@@ -20,8 +36,14 @@ public class CartService implements CartIService {
 		}
 
 		return articlesQuantity;
-	}
+	}*/
 
+	@Override
+	public void addOrderLineToCart(Cart cart, OrderLineDTO orderLine) {
+		Set<OrderLineDTO> orderLines = new HashSet<>();
+		orderLines.add(orderLine);
+	}
+	/*
 	@Override
 	public double getTotalPriceCart(Cart cart) {
 		Set<Article> articles = cart.getArticles();
@@ -32,14 +54,6 @@ public class CartService implements CartIService {
 			total = total + sousTotal;
 		}		
 		return total;
-	}
-
-
-	@Override
-	public void addArticle(Cart cart, Article article) {
-		cart.getArticles().add(article);
-		cart.setArticlesQuantity(cart.getArticlesQuantity()+article.getQuantity());
-		cart.setPrice(cart.getPrice()+article.getPrice()*article.getQuantity());
 	}
 
 	@Override
@@ -54,21 +68,8 @@ public class CartService implements CartIService {
 		cart.getArticles().remove(article);
 		cart.setArticlesQuantity(cart.getArticlesQuantity()-article.getQuantity());
 		cart.setPrice(cart.getPrice()-article.getPrice()*article.getQuantity());
-	}
-
-	@Override
-	public boolean enoughInStock(Article article, Product product) {
-		boolean inStock = false;
-		for (Stock stock : product.getStocks()) {
-			if (stock.getSize().getLabel().equals(article.getSize().getLabel())){
-				if (stock.getQuantity()>=article.getQuantity()) {
-					inStock=true;
-				}
-			}
-		}
-		return inStock;
 	}*/
-	
+
 	@Override
 	public void sessionCartGenerator(Model model, Cart sessionCart) {
 		if(sessionCart == null) {
@@ -76,5 +77,33 @@ public class CartService implements CartIService {
 		} else {
 			model.addAttribute("sessionCart", sessionCart);
 		}
+	}
+	
+	
+	@Override
+	public Double getTotalCartPrice(Cart cart) {
+		
+		Double total = 0.0;
+		
+		for (OrderLineDTO line : cart.getOrderLines()) {
+			total = total + (line.getQuantity() * line.getPrice());
+		}
+		
+		return total;
+	}
+
+
+	@Override
+	public boolean enoughInStock(OrderLineDTO orderLine) {
+		
+		List<StockDTO> stocks = productDelegate.getClothById(orderLine.getClothId()).getStocks();
+		
+		return stocks.stream().anyMatch(s -> {
+			if(s.getSize().equals(orderLine.getSize()) 
+					&& s.getQuantity() >= orderLine.getQuantity()) {
+				return true;
+			}
+			return false;
+		});
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.DesignDTO;
+import fr.eql.al35.dto.LocationDTO;
 import fr.eql.al35.dto.ProductTypeDTO;
 
 public interface ProductIService {
@@ -12,7 +13,7 @@ public interface ProductIService {
 	
 	List<ProductTypeDTO> displayAllCategories();
 	
-	List<ClothDTO> displayByProductType(ProductTypeDTO productType);
+	List<ClothDTO> displayByProductType(String productTypeName);
 	
 	List<DesignDTO> displayAllDesign();
 	
@@ -23,5 +24,9 @@ public interface ProductIService {
 	ClothDTO addProduct(ClothDTO product);
 	
 	ClothDTO displayProductById(Integer id);
+
+	List<LocationDTO> displayAllLocations(String productTypeName);
+
+	ProductTypeDTO getProductTypeByName(String productTypeName);
 
 }
