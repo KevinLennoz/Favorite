@@ -49,5 +49,11 @@ sudo systemctl enable sonar
 sudo systemctl start sonar
 sudo systemctl status sonar
 
+JENKINSPWD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+echo "----------------|Start Jenkins password|--------------------"
+echo $JENKINSPWD
+echo "-----------------|End Jenkins password|---------------------"
+
+
 
 
