@@ -28,7 +28,9 @@
 					<div class="row">
 						<div class="col-md-12 mx-0">
 							<form id="msform" th:action="@{/newCommand}" th:object="${sessionPurchaseOrder}" method="post">
-								<h3 th:text="'Totale du panier : '*{taxInPrice} + 'Euros'"></h3>
+								<h3 th:text="'Totale du panier : ' + *{#numbers.formatCurrency(taxInPrice)}"></h3>\
+								<input type="hidden" th:field="*{taxOutPrice}"/>
+								<input type="hidden" th:field="*{taxInPrice}"/>
 								<!-- progressbar -->
 								<ul id="progressbar">
 									<!--  <li class="active" id="account"><strong>Compte</strong></li>-->
@@ -39,7 +41,7 @@
 								<fieldset>
 									<div class="form-card">
 										<h2 class="fs-title">Adresse de Facturation</h2>
-										<select th:field="*{billingAddress}">
+										<select th:field="*{billingAddressId}">
 											<option value="">Selectionnez une adresse</option>
 											<option th:each="address : ${sessionUser.addresses}"
 													th:value="${address.id}" th:text="${address.name}"></option>
@@ -47,7 +49,7 @@
 									</div>
 									<div class="form-card">
 										<h2 class="fs-title">Adresse de Livraison</h2>
-										<select th:field="*{billingAddress}">
+										<select th:field="*{deliveryAddressId}">
 											<option value="">Selectionnez une adresse</option>
 											<option th:each="address : ${sessionUser.addresses}"
 													th:value="${address.id}" th:text="${address.name}"></option>
@@ -95,11 +97,11 @@
 												</select>
 												<select class="list-dt" id="year" name="expyear">
 													<option selected>Année</option>
-													<option>2021</option>
 													<option>2022</option>
 													<option>2023</option>
 													<option>2024</option>
 													<option>2025</option>
+													<option>2026</option>
 												</select>
 											</div>
 										</div>
