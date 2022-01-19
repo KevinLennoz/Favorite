@@ -18,7 +18,7 @@ public class Cart implements Serializable{
 	private List<OrderLineDTO> orderLines;
 	private Integer clothQuantity;
 	private Double totalPrice;
-	
+
 	public Cart() {
 		this.orderLines = new ArrayList<>();
 		this.clothQuantity = 0;
