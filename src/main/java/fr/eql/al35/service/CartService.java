@@ -2,7 +2,6 @@ package fr.eql.al35.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +46,7 @@ public class CartService implements CartIService {
 	public void addOrderLineToCart(Cart cart, OrderLineDTO orderLine) {
 		
 		//Récupération des lignes deja existantes dans le cart
-		Set<OrderLineDTO> orderLines = cart.getOrderLines();
+		List<OrderLineDTO> orderLines = cart.getOrderLines();
 		
 		//Récupération du cloth à partir de son id
 		ClothDTO cloth = productDelegate.getClothById(orderLine.getClothId());
