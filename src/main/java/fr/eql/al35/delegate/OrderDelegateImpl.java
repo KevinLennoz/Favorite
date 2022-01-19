@@ -59,6 +59,6 @@ public class OrderDelegateImpl implements OrderDelegate {
 	public PurchaseOrderDTO saveOrder(PurchaseOrderDTO order) {
 		return WebClientGenericResponse.postResponse(orderWebclient,
 													 ORDER_ENDPOINT,
-													 new PurchaseOrderDTO());
+													 order);
 	}
 }
