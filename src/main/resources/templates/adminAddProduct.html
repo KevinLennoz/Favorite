@@ -36,8 +36,43 @@
 						<td><input  class="card-input" th:value="${product.price}" contentEditable="true" name="price"></input></td>
 					</tr>
 					<tr>
-						<th><th:label class="card-label">Quantité totale : </th:label></th>
-						<td><input class="card-input" th:value="${product.quantity}" contentEditable="true" name="quantity"></input></td>
+						<th><th:label class="card-label">Stock : </th:label></th>
+					</tr>
+					<tr>
+						<th><th:label class="card-label">Taille : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[0].size.label}" contentEditable="true" th:value="${product.stocks[0].size.label}"></input></td>
+						<th><th:label class="card-label">Quantité : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[0].quantity}" contentEditable="true" th:value="${product.stocks[0].quantity}"></input></td>
+					</tr>
+					<tr>
+						<th><th:label class="card-label">Taille : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[1].size.label}" contentEditable="true" th:value="${product.stocks[1].size.label}"></input></td>
+						<th><th:label class="card-label">Quantité : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[1].quantity}" contentEditable="true" th:value="${product.stocks[1].quantity}"></input></td>
+					</tr>
+					<tr>
+						<th><th:label class="card-label">Taille : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[2].size.label}" contentEditable="true" th:value="${product.stocks[2].size.label}"></input></td>
+						<th><th:label class="card-label">Quantité : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[2].quantity}" contentEditable="true" th:value="${product.stocks[2].quantity}"></input></td>
+					</tr>
+					<tr>
+						<th><th:label class="card-label">Taille : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[3].size.label}" contentEditable="true" th:value="${product.stocks[3].size.label}"></input></td>
+						<th><th:label class="card-label">Quantité : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[3].quantity}" contentEditable="true" th:value="${product.stocks[3].quantity}"></input></td>
+					</tr>
+					<tr>
+						<th><th:label class="card-label">Taille : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[4].size.label}" contentEditable="true" th:value="${product.stocks[4].size.label}"></input></td>
+						<th><th:label class="card-label">Quantité : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[4].quantity}" contentEditable="true" th:value="${product.stocks[4].quantity}"></input></td>
+					</tr>
+					<tr>
+						<th><th:label class="card-label">Taille : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[5].size.label}" contentEditable="true" th:value="${product.stocks[5].size.label}"></input></td>
+						<th><th:label class="card-label">Quantité : </th:label></th>
+						<td><input class="card-input" th:field="${product.stocks[5].quantity}" contentEditable="true" th:value="${product.stocks[5].quantity}"></input></td>
 					</tr>
 				</table>
 					<div class="card-button-div">
@@ -46,7 +81,7 @@
   <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
 </svg> Ajouter un produit</button>
 					</div>
-					
+
 				</form>
 				<a type="button" id="card-button-6" class="btn btn-dark btn-sm " href="/admin/product" ><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>

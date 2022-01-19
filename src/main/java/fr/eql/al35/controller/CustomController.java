@@ -16,10 +16,10 @@ import fr.eql.al35.iservice.ProductIService;
 
 @Controller
 public class CustomController {
-	
+
 	private ProductIService productService;
 	private DesignIService designService;
-	
+
 	private SizeDTO size;
 	private Integer quantity;
 
@@ -30,19 +30,19 @@ public class CustomController {
 	}
 
 	@PostMapping("/generateCustom")
-	public String displayGenrateCustom(@ModelAttribute("orderLine") OrderLineDTO orderLine, @RequestParam("clothId") Integer clothId,
+	public String displayGenerateCustom(@ModelAttribute("orderLine") OrderLineDTO orderLine, @RequestParam("clothId") Integer clothId,
 			 Model model) {
-		
+
 		String category = productService.displayProductById(clothId).getProductType().getName();
 		size = orderLine.getSize();
 		quantity = orderLine.getQuantity();
 
 		return "redirect:/custom/" + category + "/" + clothId;
 	}
-	
+
 	@GetMapping("/custom/{category}/{clothId}")
 	public String displayCustom(@PathVariable String category, @PathVariable Integer clothId, Model model) {
-		
+
 		OrderLineDTO orderLine = new OrderLineDTO();
 		orderLine.setSize(size);
 		orderLine.setQuantity(quantity);
@@ -50,7 +50,7 @@ public class CustomController {
 		model.addAttribute("categories", productService.displayAllCategories());
 		model.addAttribute("designs", designService.displayAllDesign());
 		model.addAttribute("orderLine", orderLine);
-		
+
 		return "custom";
 	}
 }

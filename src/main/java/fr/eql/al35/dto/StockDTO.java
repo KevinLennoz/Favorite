@@ -11,12 +11,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-@ToString 
+@ToString
 @EqualsAndHashCode
 public class StockDTO implements Serializable{
 
@@ -25,5 +24,10 @@ public class StockDTO implements Serializable{
     private Integer id;
     private Integer quantity;
     private SizeDTO size;
+
+    public StockDTO() {
+        this.setQuantity(0);
+        this.setSize(new SizeDTO());
+    }
 
 }

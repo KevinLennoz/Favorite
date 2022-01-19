@@ -1,11 +1,8 @@
 package fr.eql.al35.service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +21,7 @@ public class ProductService implements ProductIService {
 
 	private final ProductDelegate productDelegate;
 
-	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";@Autowired
+	@Autowired
 	public ProductService(ProductDelegate productDelegate) {
 		this.productDelegate = productDelegate;
 	}
@@ -53,6 +50,11 @@ public class ProductService implements ProductIService {
 	public ClothDTO displayProductById(Integer id) {
 		ClothDTO cloth = productDelegate.getClothById(id);
 		updateAvailability(cloth);
+		Integer totalInStock = 0;
+		for (StockDTO stock : cloth.getStocks()) {
+			totalInStock += stock.getQuantity();
+			cloth.setQuantityInStock(totalInStock);
+		}
 		return cloth;
 	}
 
@@ -81,10 +83,18 @@ public class ProductService implements ProductIService {
 				.filter(t -> t.getName().equals(productTypeName))
 				.findFirst();
 
-		if (type.isPresent()) {
-			return type.get();
-		}
-		return null;
+		return type.orElse(null);
+	}
+
+	@Override
+	public ClothDTO updateStock(Integer stockId, Integer newQuantity, Integer productId) {
+		ClothDTO updatedCloth = productDelegate.getClothById(productId);
+		updatedCloth.getStocks().forEach(stockToUpdate -> {
+			if (Objects.equals(stockToUpdate.getId(), stockId)) {
+				stockToUpdate.setQuantity(stockToUpdate.getQuantity() + newQuantity);
+			}
+		});
+		return productDelegate.updateCloth(updatedCloth);
 	}
 
 	@Override
@@ -93,26 +103,25 @@ public class ProductService implements ProductIService {
 	}
 
 	@Override
-	public ClothDTO upDate(Integer id, ClothDTO cloth) {
-		cloth.setId(id);
-		cloth.setRefCreationDate(LocalDateTime.parse(LocalDateTime.now().toString(),
-				DateTimeFormatter.ofPattern(DATE_FORMAT)));
-		return productDelegate.saveCloth(cloth);
+	public ClothDTO updateProduct(Integer productId, ClothDTO updatedCloth) {
+		updatedCloth.setPhotos(productDelegate.getClothById(productId).getPhotos());
+		updatedCloth.setId(productId);
+		updatedCloth.setRefCreationDate(LocalDateTime.now());
+		return productDelegate.updateCloth(updatedCloth);
 	}
 
 	@Override
-	public void setDeleteProduct(Integer id) {
+	public void deleteProduct(Integer id) {
 		ClothDTO cloth = displayProductById(id);
 		if(cloth != null) {
-			cloth.setRefDeletionDate(LocalDateTime.parse(LocalDateTime.now().toString(),
-					DateTimeFormatter.ofPattern(DATE_FORMAT)));
+			cloth.setRefDeletionDate(LocalDateTime.now());
 		}
+		productDelegate.updateCloth(cloth);
 	}
 
 	@Override
 	public ClothDTO addProduct(ClothDTO cloth) {
-		cloth.setRefCreationDate(LocalDateTime.parse(LocalDateTime.now().toString(),
-				DateTimeFormatter.ofPattern(DATE_FORMAT)));
+		cloth.setRefCreationDate(LocalDateTime.now());
 		List<PhotoDTO> photos = new ArrayList<>();
 		PhotoDTO photoPantalon = new PhotoDTO();
 		photoPantalon.setPath("PANTALON_BEIGE_1.jpg");

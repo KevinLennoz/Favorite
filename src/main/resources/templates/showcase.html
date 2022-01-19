@@ -27,7 +27,7 @@
 				</nav>
 			</div>
 		</div>
-		
+
 		<div layout:fragment="content">
 			<div class="container">
 			    <div class="row">
@@ -36,9 +36,9 @@
 		            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-8" th:each="product : ${products}" th:unless="${product.refDeletionDate}">
 		            	<div class="cloth-grid mx-1 my-2">
 			                <div class="cloth-image">
-				                <a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}"> 
+				                <a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}">
 				                	<img class="pic-1" th:src="@{'/photos/product/' + ${product.photos[0].path}}">
-				                	<img class="pic-2" th:src="@{'/photos/product/' + ${product.photos[1].path}}">
+				                	<img class="pic-2" th:if="${product.photos.size > 1}" th:src="@{'/photos/product/' + ${product.photos[1].path}}">
 				                </a>
 				                <span class="soldout" th:if="${not product.available}">Rupture de Stock</span>
 			                </div>
@@ -46,7 +46,7 @@
 			                    <h3 class="title">
 			                    	<a th:href="@{'/products/' + ${product.productType.name} + '/{id}'(id=${product.id})}" th:text="${product.name}"></a>
 			                    </h3>
-			                    
+
 			                    <div class="cloth-stock-price">
 			                    	<span class="price">[[${#numbers.formatCurrency(product.price)}]]</span>
 			                    </div>
