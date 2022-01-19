@@ -2,10 +2,7 @@ package fr.eql.al35.iservice;
 
 import java.util.List;
 
-import fr.eql.al35.dto.ClothDTO;
-import fr.eql.al35.dto.DesignDTO;
-import fr.eql.al35.dto.LocationDTO;
-import fr.eql.al35.dto.ProductTypeDTO;
+import fr.eql.al35.dto.*;
 
 public interface ProductIService {
 
@@ -19,9 +16,9 @@ public interface ProductIService {
 
 	List<DesignDTO> displayAllDesign();
 
-	ClothDTO upDate(Integer id, ClothDTO product);
+	ClothDTO updateProduct(Integer productId, ClothDTO product);
 
-	void setDeleteProduct(Integer id);
+	void deleteProduct(Integer id);
 
 	ClothDTO addProduct(ClothDTO product);
 
@@ -31,4 +28,5 @@ public interface ProductIService {
 
 	ProductTypeDTO getProductTypeByName(String productTypeName);
 
+	ClothDTO updateStock(Integer stockId, Integer newQuantity, Integer productId);
 }

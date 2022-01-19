@@ -108,17 +108,17 @@ public class ProductDelegateImpl implements ProductDelegate {
 	public ClothDTO saveCloth(ClothDTO cloth) {
 		return WebClientGenericResponse.postResponse(productWebclient,
 													 PRODUCT_ENDPOINT,
-													 new ClothDTO());
+													 cloth);
 	}
 
 	/*
 	 * PUT :  "/clothes"
 	 */
 	@Override
-	public ClothDTO updateCloth(ClothDTO cloth) {
+	public ClothDTO updateCloth(ClothDTO updatedCloth) {
 		return WebClientGenericResponse.putResponse(productWebclient,
 													PRODUCT_ENDPOINT,
-													new ClothDTO());
+													updatedCloth);
 	}
 
 	@Override

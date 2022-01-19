@@ -70,7 +70,7 @@ public class PaymentController {
         purchaseOrder.setTaxInPrice(
                 purchaseOrder.getOrderLines().stream().mapToDouble(OrderLineDTO::getPrice).sum());
         purchaseOrder.setTaxOutPrice(purchaseOrder.getTaxInPrice());
-        purchaseOrder.setUuid(UUID.randomUUID().toString());
+        purchaseOrder.setUuid(Integer.valueOf(UUID.randomUUID().toString()));
 
         purchaseOrder.getOrderLines().forEach(orderLine -> orderLines.add(
                     new OrderLineForProductWSDTO(orderLine.getCloth(), orderLine.getSize(), orderLine.getQuantity())));

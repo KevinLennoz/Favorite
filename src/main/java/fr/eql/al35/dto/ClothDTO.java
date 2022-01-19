@@ -10,6 +10,8 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @NoArgsConstructor
@@ -17,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@ToString 
+@ToString
 @EqualsAndHashCode
 public class ClothDTO implements Serializable{
 
@@ -36,4 +38,8 @@ public class ClothDTO implements Serializable{
     private Boolean available;
     private Integer quantityInStock;
 
+    public static ClothDTO initStockClothDTO(ClothDTO cloth) {
+        cloth.setStocks(Arrays.asList(new StockDTO(), new StockDTO(), new StockDTO(), new StockDTO(), new StockDTO(), new StockDTO()));
+        return cloth;
+    }
 }

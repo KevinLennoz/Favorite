@@ -1,5 +1,6 @@
 package fr.eql.al35.controller;
 
+import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.UserDTO;
 import fr.eql.al35.iservice.AdminIService;
 import fr.eql.al35.iservice.PurchaseOrderIService;
@@ -20,6 +21,8 @@ public class AdminController {
 	private final PurchaseOrderIService purchaseOrderService;
 
 	private static final String ADMIN_USERS_PAGE = "redirect:/admin/users";
+	private static final String MODEL_CLOTHES = "clothes";
+	private static final String ADMIN_PRODUCTS = "adminProducts";
 
 	@Autowired
 	public AdminController(ProductIService productService, AccountIService accountService, AdminIService adminService, PurchaseOrderIService purchaseOrderService) {
@@ -32,12 +35,6 @@ public class AdminController {
 	@GetMapping("/admin/home")
 	public String redirectAdminHome( Model model) {
 		return "adminHome";
-	}
-
-	@GetMapping("/admin/products")
-	public String displayAdminProduct( Model model) {
-		model.addAttribute("clothes", productService.displayAllProducts());
-		return "adminProducts";
 	}
 
 	@GetMapping("/admin/users")
@@ -78,101 +75,52 @@ public class AdminController {
 		return "adminOrderInfo";
 	}
 
-	/*
-	@PostMapping("/upDateProducts")
-	public String upDateProducts(@ModelAttribute("product")Product product, @RequestParam("idProduct") Integer idProduct, Model model) {
-		model.addAttribute("productTypes", productService.displayAllCategories());
-		model.addAttribute("product", productService.upDate(idProduct, product));
-
-		return "redirect:/admin/products/"+idProduct;
+	@GetMapping("/admin/products")
+	public String displayAdminProduct( Model model) {
+		model.addAttribute(MODEL_CLOTHES, productService.displayAllProducts());
+		return ADMIN_PRODUCTS;
 	}
 
-	@PostMapping("/upDateStock")
-	public String upDateStock(@ModelAttribute("stock")Stock stock, @RequestParam("idStock") Integer idStock, @RequestParam("idProduct") Integer idProduct,
-			@RequestParam String sizeLabel, Model model) {
-		stock.setProduct(productService.displayProductById(idProduct));
-		Size size = new Size();
-		size.setLabel(sizeLabel);
-		stock.setSize(size);
-		stockService.upDate(idStock, stock);
-		Product product = productService.displayProductById(idProduct);
-		Integer quantity = 0;
-		for (Stock s : product.getStocks()) {
-			quantity+=s.getQuantity();
-		}
-		product.setQuantity(quantity);
+	@GetMapping("/admin/products/{productId}")
+	public String displayProductDetail(@PathVariable Integer productId, Model model) {
+		model.addAttribute("newQuantity", 0);
+		model.addAttribute("product", productService.displayProductById(productId));
 		model.addAttribute("productTypes", productService.displayAllCategories());
-		model.addAttribute("product", productService.upDate(idProduct, product));
-
-		return "redirect:/admin/products/"+idProduct;
-	}
-
-	@PostMapping("/upDatePhotos")
-	public String upDatePhoto(@ModelAttribute("photo")Photo photo,
-							  @RequestParam("idPhoto") Integer idPhoto,
-							  @RequestParam("pathPhoto") String pathPhoto,
-							  @RequestParam("descriptionPhoto") String descriptionPhoto,
-							  @RequestParam("idProduct") Integer idProduct,
-							  @RequestParam("index") Integer index,
-							  Model model) {
-		model.addAttribute("productTypes", productService.displayAllCategories());
-		photoService.upDatePhoto(idPhoto, pathPhoto, descriptionPhoto, idProduct, index);
-		model.addAttribute("product", productService.displayProductById(idProduct));
 		return "adminProductInfo";
 	}
 
-	@GetMapping("/admin/command")
-	public String displayAdminCommand( Model model) {
-		model.addAttribute("commands", commandService.displayAllCommands());
-		model.addAttribute("statusRef", adminService.displayAllStatus());
-		model.addAttribute("vatRef", adminService.displayAllVats());
-		model.addAttribute("payModeRef", adminService.displayAllPayModes());
-
-		return "adminCommand";
+	@PostMapping("/admin/products/{productId}/update")
+	public String upDateProducts(@ModelAttribute ClothDTO product, @PathVariable Integer productId) {
+		productService.updateProduct(productId, product);
+		return "redirect:/admin/products/"+productId;
 	}
 
-	@PostMapping("/upDateCommands")
-	public String upDateCommands(@ModelAttribute("command")Command command, Model model) {
-		commandService.updateCommand(command);
-		model.addAttribute("command", commandService.updateCommand(command));
-		model.addAttribute("commands", commandService.displayAllCommands());
-		model.addAttribute("statusRef", adminService.displayAllStatus());
-		model.addAttribute("vatRef", adminService.displayAllVats());
-		model.addAttribute("payModeRef", adminService.displayAllPayModes());
-		return "adminCommand";
+	@GetMapping("/admin/products/{productId}/delete")
+	public String deleteProduct(@PathVariable Integer productId, Model model) {
+		productService.deleteProduct(productId);
+		model.addAttribute(MODEL_CLOTHES, productService.displayAllProducts());
+		return ADMIN_PRODUCTS;
 	}
 
-	@GetMapping("/admin/products/{id}")
-	public String displayProduct(@PathVariable Integer id, Model model) {
-		Stock stock = new Stock();
-		model.addAttribute("stock", stock);
-		model.addAttribute("product", productService.displayProductById(id));
-		model.addAttribute("productTypes", productService.displayAllCategories());
-		model.addAttribute("index", 0);
-		return "adminProductInfo";
-	}
-	@GetMapping("/admin/products/delete/{id}")
-	public String deleteProduct(@PathVariable Integer id, Model model) {
-		model.addAttribute("products", productService.displayAllProducts());
-		productService.setDeleteProduct(id);
-		return "adminProducts";
+	@PostMapping("/updateStock")
+	public String upDateStock(@RequestParam("newQuantity")Integer newQuantity, @RequestParam("stockId") Integer stockId,
+							  @RequestParam("productId") Integer productId) {
+		productService.updateStock(stockId, newQuantity, productId);
+		return "redirect:/admin/products/"+productId;
 	}
 
-	@GetMapping("/admin/product/add")
+	@GetMapping("/admin/products/add")
 	public String adminAddProduct( Model model) {
-		Product product = new Product();
-		model.addAttribute("product", product);
-
+		model.addAttribute("product", ClothDTO.initStockClothDTO(new ClothDTO()));
 		model.addAttribute("productTypes", productService.displayAllCategories());
 		return "adminAddProduct";
 	}
 
 	@PostMapping("/addProduct")
-	public String addProduct(@ModelAttribute("product")Product product, Model model) {
+	public String addProduct(@ModelAttribute("product") ClothDTO product, Model model) {
 		productService.addProduct(product);
-		model.addAttribute("products", productService.displayAllProducts());
-		return "adminProducts";
+		model.addAttribute(MODEL_CLOTHES, productService.displayAllProducts());
+		return ADMIN_PRODUCTS;
 	}
 
-	 */
 }
