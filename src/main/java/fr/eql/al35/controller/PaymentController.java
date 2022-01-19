@@ -44,13 +44,12 @@ public class PaymentController {
     @GetMapping("/payment")
     public String displayPayment(Model model, HttpSession session) {
         Cart sessionCart = (Cart) session.getAttribute(SESSION_CART_PARAM);
-        Double amountToPay = sessionCart.getOrderLines().stream().mapToDouble(OrderLineDTO::getPrice).sum();
+        UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
+        Double amountToPay = sessionCart.getOrderLines().stream().mapToDouble(OrderLineDTO::getTotalPrice).sum();
 
         PurchaseOrderDTO purchaseOrder = purchaseOrderService.createPurchaseOrder(sessionCart, new PurchaseOrderDTO());
         purchaseOrder.setTaxInPrice(amountToPay);
         purchaseOrder.setTaxOutPrice(amountToPay);
-
-        UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
 
         model.addAttribute(SESSION_PURCHASE_ORDER_PARAM, purchaseOrder);
         model.addAttribute(SESSION_USER_PARAM, sessionUser);
@@ -61,25 +60,24 @@ public class PaymentController {
     public String createPurchaseOrder(HttpSession session,
                                       @ModelAttribute(SESSION_PURCHASE_ORDER_PARAM) PurchaseOrderDTO purchaseOrder) {
         UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
+        Cart sessionCart = (Cart) session.getAttribute(SESSION_CART_PARAM);
 
         List<OrderLineForProductWSDTO> orderLines = new ArrayList<>();
 
         purchaseOrder.setUserId(sessionUser.getId());
         purchaseOrder.setReference(writeReference(sessionUser));
         purchaseOrder.setCreationDate(LocalDateTime.now());
-        purchaseOrder.setTaxInPrice(
-                purchaseOrder.getOrderLines().stream().mapToDouble(OrderLineDTO::getPrice).sum());
-        purchaseOrder.setTaxOutPrice(purchaseOrder.getTaxInPrice());
-        purchaseOrder.setUuid(Integer.valueOf(UUID.randomUUID().toString()));
+        purchaseOrder.setUuid(UUID.randomUUID().toString());
+        purchaseOrder.setOrderLines(sessionCart.getOrderLines());
 
         purchaseOrder.getOrderLines().forEach(orderLine -> orderLines.add(
                     new OrderLineForProductWSDTO(orderLine.getCloth(), orderLine.getSize(), orderLine.getQuantity())));
 
+        try {
         purchaseOrderService.updateStocks(orderLines);
 
         purchaseOrderService.savePurchaseOrder(purchaseOrder); //stocker en BDD command et addresses
 
-        try {
             Thread.sleep(3000);
         } catch(InterruptedException e) {
             log.error(e.getMessage());
