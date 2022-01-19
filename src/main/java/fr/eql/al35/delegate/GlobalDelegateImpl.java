@@ -29,9 +29,6 @@ public class GlobalDelegateImpl implements GlobalDelegate {
 	@Override
 	public void saveOrder(PurchaseOrderDTO order) {
 		orderDelegate.saveOrder(order);
-
-		order.getOrderLines()
-		.forEach(line -> productDelegate.updateCloth(productDelegate.getClothById(line.getClothId())));
 	}
 
 	@Override
