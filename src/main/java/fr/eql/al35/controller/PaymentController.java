@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import fr.eql.al35.dto.Cart;
+import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.OrderLineDTO;
 import fr.eql.al35.dto.PurchaseOrderDTO;
 import fr.eql.al35.dto.StockDTO;
@@ -71,15 +72,16 @@ public class PaymentController {
         purchaseOrder.setOrderLines(sessionCart.getOrderLines());
 
         purchaseOrder.getOrderLines().forEach(orderLine -> {
-            StockDTO stockDTO = new StockDTO();
-            stockDTO.setId(orderLine.getCloth()
-                                    .getStocks()
-                                    .stream()
-                                    .filter(stock -> stock.getSize().getLabel().equals(orderLine.getSize().getLabel()))
-                                    .findFirst()
-                                    .get()
-                                    .getId());
-            stockDTO.setQuantity(orderLine.getQuantity());
+            StockDTO stockDTO = orderLine.getCloth()
+                                         .getStocks()
+                                         .stream()
+                                         .filter(stock -> stock.getSize().getLabel().equals(orderLine.getSize().getLabel()))
+                                         .findFirst()
+                                         .get();
+            stockDTO.setQuantity(stockDTO.getQuantity() - orderLine.getQuantity());
+            ClothDTO clothDTO = new ClothDTO();
+            clothDTO.setId(orderLine.getCloth().getId());
+            stockDTO.setCloth(clothDTO);
             stockDTOS.add(stockDTO);
         });
 
