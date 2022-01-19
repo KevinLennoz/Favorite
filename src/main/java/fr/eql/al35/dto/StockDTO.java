@@ -23,6 +23,7 @@ public class StockDTO implements Serializable{
     private Integer id;
     private Integer quantity;
     private SizeDTO size;
+    private ClothDTO cloth;
 
     public StockDTO() {
         this.setQuantity(0);
