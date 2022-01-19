@@ -1,11 +1,13 @@
 package fr.eql.al35.delegate;
 
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import fr.eql.al35.dto.OrderLineForProductWSDTO;
+import fr.eql.al35.dto.StockDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,6 +15,7 @@ import fr.eql.al35.dto.ClothDTO;
 import fr.eql.al35.dto.DesignDTO;
 import fr.eql.al35.dto.ProductTypeDTO;
 import fr.eql.al35.util.WebClientGenericResponse;
+import reactor.core.publisher.Mono;
 
 @Service
 public class ProductDelegateImpl implements ProductDelegate {
@@ -121,11 +124,16 @@ public class ProductDelegateImpl implements ProductDelegate {
 													updatedCloth);
 	}
 
-	@Override
-	public ArrayList<OrderLineForProductWSDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
-		return WebClientGenericResponse.putResponse(productWebclient,
-													"/stocks",
-													new ArrayList<>());
-	}
+    @Override
+    public List<StockDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
+        return productWebclient.put()
+                               .uri("/stocks")
+                               .body(Mono.just(orderLines), orderLines.getClass())
+                               .accept(MediaType.APPLICATION_JSON)
+                               .acceptCharset(StandardCharsets.UTF_8)
+                               .retrieve()
+                               .bodyToMono(orderLines.getClass())
+                               .block();
+    }
 
 }
