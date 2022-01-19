@@ -123,9 +123,9 @@ withCredentials([sshUserPrivateKey(credentialsId: '2631e1d0-85aa-40f1-a410-57f03
 - Créez 3 nouveaux items `Pipeline` en les nommant respectivement `favortie-orderWS`, `favorite-productWS` et `favorite-userWS`.
 - Pour chaque project répétez les mêmes étapes sans les étapes du `Pipeline Syntax` en leur donnant les url Git suivant :
 ```
-Pour favortie-orderWS : https://github.com/DuvCharles/favorite-orderWS
-Pour favortie-productWS : https://github.com/hajjoujti/favorite-productWS
-Pour favortie-userWS : https://github.com/DuvCharles/favorite-userWS/blob/main/Jenkinsfile
+Pour favorite-orderWS : https://github.com/DuvCharles/favorite-orderWS
+Pour favorite-productWS : https://github.com/hajjoujti/favorite-productWS
+Pour favorite-userWS : https://github.com/DuvCharles/favorite-userWS
 ```
 - Vous pouvez choisir que la fin du build d'un service déclenche le build d'un autre service et le dernier service buildé déclenche le build du projet `favorite`.
 - Vous pouvez aussi déclencher le build de chaque service manuellement et à la fin de succès de tous vous déclencherez le projet `favorite`.

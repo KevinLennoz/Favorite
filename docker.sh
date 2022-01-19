@@ -11,3 +11,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 #Rajouter un utilisateur au groupe docker pour éviter d'utiliser sudo à chaque commande
 sudo usermod -aG docker vagrant
 sudo apt-get install -y docker-compose
+
+#Démarrage du service pour créer les bds
+cd /vagrant/docker-compose-files/
+docker-compose up -d --no-recreate

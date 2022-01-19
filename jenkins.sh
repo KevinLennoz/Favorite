@@ -30,5 +30,3 @@ echo "Installing git"
 sudo apt-get -y install git
 
 echo "Installing Jenkins Plugins"
-JENKINSPWD=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
-echo $JENKINSPWD
