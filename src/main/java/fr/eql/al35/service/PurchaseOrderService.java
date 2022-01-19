@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.eql.al35.delegate.ProductDelegate;
 import fr.eql.al35.dto.OrderLineForProductWSDTO;
+import fr.eql.al35.dto.StockDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 
 	@Override
 	public PurchaseOrderDTO createPurchaseOrder(Cart cart, PurchaseOrderDTO order) {
-		order.setOrderLines(ListConvertor.convertToList(cart.getOrderLines()));
+		order.setOrderLines(cart.getOrderLines());
 		return order;
 	}
 
@@ -59,7 +60,7 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 	}
 
 	@Override
-	public ArrayList<OrderLineForProductWSDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
+	public List<StockDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
 		return productDelegate.updateStocks(orderLines);
 	}
 
