@@ -31,7 +31,7 @@ public class PurchaseOrderDTO implements Serializable {
     private AddressDTO billingAddress;
     private Integer payModeId;
     private PayModeDTO payMode;
-    private Integer uuid;
+    private String uuid;
     private Status status;
     private Vat vat;
 
