@@ -39,7 +39,7 @@
 								</div>
 								<div class="paraphContent">
 									<span class="orderStatus">
-										<b class="cmdEnPrep" th:text="${order.status.name}"> </b>
+										<b class="cmdEnPrep" th:if="${order.status}" th:text="${order.status.name}"> </b>
 									</span>
 								</div>
 							</div>
