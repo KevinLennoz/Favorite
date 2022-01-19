@@ -1,10 +1,8 @@
 package fr.eql.al35.iservice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.eql.al35.dto.Cart;
-import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import fr.eql.al35.dto.PurchaseOrderDTO;
 import fr.eql.al35.dto.StockDTO;
 
@@ -20,6 +18,6 @@ public interface PurchaseOrderIService {
 	
 	List<PurchaseOrderDTO> getAllPurchaseOrders();
 
-    List<StockDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines);
+    List<StockDTO> updateStocks(List<StockDTO> stockDTOS);
 
 }

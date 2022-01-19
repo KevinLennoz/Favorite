@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import fr.eql.al35.dto.Cart;
 import fr.eql.al35.dto.OrderLineDTO;
-import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import fr.eql.al35.dto.PurchaseOrderDTO;
+import fr.eql.al35.dto.StockDTO;
 import fr.eql.al35.dto.UserDTO;
 import fr.eql.al35.service.PurchaseOrderService;
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ public class PaymentController {
         UserDTO sessionUser = (UserDTO) session.getAttribute(SESSION_USER_PARAM);
         Cart sessionCart = (Cart) session.getAttribute(SESSION_CART_PARAM);
 
-        List<OrderLineForProductWSDTO> orderLines = new ArrayList<>();
+        List<StockDTO> stockDTOS = new ArrayList<>();
 
         purchaseOrder.setUserId(sessionUser.getId());
         purchaseOrder.setReference(writeReference(sessionUser));
@@ -70,13 +70,23 @@ public class PaymentController {
         purchaseOrder.setUuid(UUID.randomUUID().toString());
         purchaseOrder.setOrderLines(sessionCart.getOrderLines());
 
-        purchaseOrder.getOrderLines().forEach(orderLine -> orderLines.add(
-                    new OrderLineForProductWSDTO(orderLine.getCloth(), orderLine.getSize(), orderLine.getQuantity())));
+        purchaseOrder.getOrderLines().forEach(orderLine -> {
+            StockDTO stockDTO = new StockDTO();
+            stockDTO.setId(orderLine.getCloth()
+                                    .getStocks()
+                                    .stream()
+                                    .filter(stock -> stock.getSize().getLabel().equals(orderLine.getSize().getLabel()))
+                                    .findFirst()
+                                    .get()
+                                    .getId());
+            stockDTO.setQuantity(orderLine.getQuantity());
+            stockDTOS.add(stockDTO);
+        });
 
         try {
-        purchaseOrderService.updateStocks(orderLines);
+            purchaseOrderService.updateStocks(stockDTOS);
 
-        purchaseOrderService.savePurchaseOrder(purchaseOrder); //stocker en BDD command et addresses
+            purchaseOrderService.savePurchaseOrder(purchaseOrder); //stocker en BDD command et addresses
 
             Thread.sleep(3000);
         } catch(InterruptedException e) {

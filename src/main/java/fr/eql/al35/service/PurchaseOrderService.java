@@ -1,11 +1,9 @@
 package fr.eql.al35.service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.eql.al35.delegate.ProductDelegate;
-import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import fr.eql.al35.dto.StockDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import fr.eql.al35.delegate.OrderDelegate;
 import fr.eql.al35.dto.Cart;
 import fr.eql.al35.dto.PurchaseOrderDTO;
 import fr.eql.al35.iservice.PurchaseOrderIService;
-import fr.eql.al35.util.ListConvertor;
 
 @Service
 public class PurchaseOrderService implements PurchaseOrderIService {
@@ -60,8 +57,8 @@ public class PurchaseOrderService implements PurchaseOrderIService {
 	}
 
 	@Override
-	public List<StockDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
-		return productDelegate.updateStocks(orderLines);
+	public List<StockDTO> updateStocks(List<StockDTO> stockDTOS) {
+		return productDelegate.updateStocks(stockDTOS);
 	}
 
 }

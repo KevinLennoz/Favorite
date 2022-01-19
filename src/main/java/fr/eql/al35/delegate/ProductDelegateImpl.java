@@ -3,7 +3,6 @@ package fr.eql.al35.delegate;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import fr.eql.al35.dto.OrderLineForProductWSDTO;
 import fr.eql.al35.dto.StockDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -125,14 +124,14 @@ public class ProductDelegateImpl implements ProductDelegate {
 	}
 
     @Override
-    public List<StockDTO> updateStocks(List<OrderLineForProductWSDTO> orderLines) {
+    public List<StockDTO> updateStocks(List<StockDTO> stockDTOS) {
         return productWebclient.put()
                                .uri("/stocks")
-                               .body(Mono.just(orderLines), orderLines.getClass())
+                               .body(Mono.just(stockDTOS), stockDTOS.getClass())
                                .accept(MediaType.APPLICATION_JSON)
                                .acceptCharset(StandardCharsets.UTF_8)
                                .retrieve()
-                               .bodyToMono(orderLines.getClass())
+                               .bodyToMono(stockDTOS.getClass())
                                .block();
     }
 
