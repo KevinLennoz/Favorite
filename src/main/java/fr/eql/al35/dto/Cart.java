@@ -1,8 +1,8 @@
 package fr.eql.al35.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,12 +15,12 @@ public class Cart implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private Set<OrderLineDTO> orderLines;
+	private List<OrderLineDTO> orderLines;
 	private Integer clothQuantity;
 	private Double totalPrice;
 	
 	public Cart() {
-		this.orderLines = new HashSet<>();
+		this.orderLines = new ArrayList<>();
 		this.clothQuantity = 0;
 		this.totalPrice = 0.0;
 	}
