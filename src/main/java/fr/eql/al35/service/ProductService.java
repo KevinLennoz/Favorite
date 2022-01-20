@@ -89,12 +89,14 @@ public class ProductService implements ProductIService {
 	@Override
 	public ClothDTO updateStock(Integer stockId, Integer newQuantity, Integer productId) {
 		ClothDTO updatedCloth = productDelegate.getClothById(productId);
-		updatedCloth.getStocks().forEach(stockToUpdate -> {
-			if (Objects.equals(stockToUpdate.getId(), stockId)) {
-				stockToUpdate.setQuantity(stockToUpdate.getQuantity() + newQuantity);
+		updatedCloth.getStocks().forEach(stock -> {
+			addClothWithIdToStock(stock, productId);
+			if (Objects.equals(stock.getId(), stockId)) {
+				stock.setQuantity(stock.getQuantity() + newQuantity);
 			}
 		});
-		return productDelegate.updateCloth(updatedCloth);
+		productDelegate.updateStocks(updatedCloth.getStocks());
+		return updatedCloth;
 	}
 
 	@Override
@@ -128,11 +130,20 @@ public class ProductService implements ProductIService {
 		photoPantalon.setDescription("PANTALON_BEIGE_1");
 		photos.add(photoPantalon);
 		cloth.setPhotos(photos);
-		return productDelegate.saveCloth(cloth);
+		ClothDTO createdCloth = productDelegate.saveCloth(cloth);
+		createdCloth.getStocks().forEach(stock -> addClothWithIdToStock(stock, createdCloth.getId()));
+		productDelegate.updateStocks(createdCloth.getStocks());
+		return createdCloth;
 	}
 
 	private void updateAvailability(ClothDTO c) {
 		List<StockDTO> stock = c.getStocks();
 		c.setAvailable(stock.stream().anyMatch(s -> s.getQuantity() > 0));
+	}
+
+	private void addClothWithIdToStock(StockDTO stock, Integer clothId) {
+		ClothDTO clothDTO = new ClothDTO();
+		clothDTO.setId(clothId);
+		stock.setCloth(clothDTO);
 	}
 }
