@@ -13,7 +13,7 @@
 <body>
 	<div layout:fragment="content">
 		<div class="row">
-			<h3 class="no-article" th:if="${orders.size == 0}">Aucune commande trouv&eacute;e</h3>
+			<h3 class="no-orderLine" th:if="${orders.size == 0}">Aucune commande trouv&eacute;e</h3>
 			<div class="accordion" id="accordionExample">
 				<div class="card" th:each="order : ${orders}">
 					<div class="card-header" th:id="'heading' + ${order.id}">
