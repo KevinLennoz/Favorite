@@ -31,7 +31,7 @@
 		<div layout:fragment="content">
 			<div class="container">
 			    <div class="row">
-			    	<h3 class="no-article" th:if="${products.size == 0}"> Pas d'article pour le moment</h3>
+			    	<h3 class="no-orderLine" th:if="${products.size == 0}"> Pas d'article pour le moment</h3>
 
 		            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-8" th:each="product : ${products}" th:unless="${product.refDeletionDate}">
 		            	<div class="cloth-grid mx-1 my-2">
