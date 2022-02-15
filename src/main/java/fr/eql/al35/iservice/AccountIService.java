@@ -8,19 +8,19 @@ import fr.eql.al35.dto.UserDTO;
 import fr.eql.al35.dto.UserTypeDTO;
 
 public interface AccountIService {
-	
+
 	List<UserDTO> displayAllUsers();
-	
-	UserDTO getUser3();//pour avoir un utilisateur en dur en session
-	
+
+	UserDTO getUserById(Integer userId);
+
 	List<AddressDTO> getAddressByUser(UserDTO user);
-	
+
 	UserDTO getAdminAccount();
-	
+
 	List<GenderDTO> getAllGenders();
-	
+
 	List<UserTypeDTO> getAllUserTypes();
-	
+
 	void saveUser(UserDTO user);
 
 }

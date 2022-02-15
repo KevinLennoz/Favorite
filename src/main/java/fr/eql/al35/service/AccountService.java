@@ -27,15 +27,15 @@ public class AccountService implements AccountIService {
 	public List<UserDTO> displayAllUsers() {
 		return userDelegate.getAllUsers();
 	}
-	
+
 	@Override
 	public void saveUser(UserDTO user) {
 		userDelegate.saveUser(user);
 	}
 
 	@Override
-	public UserDTO getUser3() {
-		return userDelegate.getUserById(3);
+	public UserDTO getUserById(Integer userId) {
+		return userDelegate.getUserById(userId);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class AccountService implements AccountIService {
 	public UserDTO getAdminAccount() {
 		return userDelegate.getUserById(2);
 	}
-	
+
 	@Override
 	public List<GenderDTO> getAllGenders(){
 		return userDelegate.getAllGenders();
