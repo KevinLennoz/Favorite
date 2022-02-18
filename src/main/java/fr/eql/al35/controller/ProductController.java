@@ -27,6 +27,13 @@ public class ProductController {
 		modelDTO.setCategories(productService.displayAllCategories());
 		return modelDTO;
 	}
+	
+	@GetMapping("/products/types/{type}")
+	public ProductsDisplayDTO displayAllProductsByType(@PathVariable String type) {
+		ProductsDisplayDTO modelDTO = new ProductsDisplayDTO();
+		modelDTO.setProducts(productService.displayByProductTypeIgnoringCase(type));
+		return modelDTO;
+	}
 
 	@GetMapping("/products/{id}")
 	public ProductDisplayDTO displayProduct (@PathVariable Integer id) {

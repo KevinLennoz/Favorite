@@ -29,4 +29,6 @@ public interface ProductIService {
 	ProductTypeDTO getProductTypeByName(String productTypeName);
 
 	ClothDTO updateStock(Integer stockId, Integer newQuantity, Integer productId);
+
+	List<ClothDTO> displayByProductTypeIgnoringCase(String productTypeName);
 }

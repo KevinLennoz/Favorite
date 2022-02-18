@@ -40,10 +40,10 @@ public class ProductService implements ProductIService {
 	}
 
 	@Override
-    public List<ClothDTO> displayAvailableProducts() {
-        List<ClothDTO> clothes = productDelegate.getAvailableProducts();
-        clothes.forEach(this::updateAvailability);
-        return clothes;
+	public List<ClothDTO> displayAvailableProducts() {
+		List<ClothDTO> clothes = productDelegate.getAvailableProducts();
+		clothes.forEach(this::updateAvailability);
+		return clothes;
 	}
 
 	@Override
@@ -66,6 +66,36 @@ public class ProductService implements ProductIService {
 	@Override
 	public List<ClothDTO> displayByProductType(String productTypeName) {
 		List<ClothDTO> clothes = productDelegate.getAllByProductType(productTypeName);
+		clothes.forEach(this::updateAvailability);
+		return clothes;
+	}
+
+	@Override
+	public List<ClothDTO> displayByProductTypeIgnoringCase(String productTypeName) {
+		String category = "";
+		switch (productTypeName.toLowerCase()) {
+		case "pull":
+			category = "Pulls";
+			break;
+		case "chemisier":
+		case "chemise":
+			category = "Chemises";
+			break;
+		case "pantalon":
+			category = "Pantalons";
+			break;
+		case "manteaux":
+		case "veste":
+			category = "Manteaux & Vestes";
+			break;
+		case "tshirt":
+			category = "T-Shirts";
+			break;
+		default:
+			break;
+		}
+
+		List<ClothDTO> clothes = productDelegate.getAllByProductType(category);
 		clothes.forEach(this::updateAvailability);
 		return clothes;
 	}
