@@ -13,7 +13,7 @@ import fr.eql.al35.iservice.AccountIService;
 import fr.eql.al35.iservice.CartIService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class AccountController {
 
 	private final AccountIService accountService;

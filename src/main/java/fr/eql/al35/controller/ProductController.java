@@ -10,7 +10,7 @@ import fr.eql.al35.iservice.ProductIService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 public class ProductController {
 
 	private final ProductIService productService;
